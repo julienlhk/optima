@@ -56,35 +56,31 @@ flowchart LR
 
 ---
 
-## Install into a repo (package-style)
+## Install into a repo (like a package)
 
-Pick one path — all wire Optima into the project so agents use it automatically.
+> The npm name `optima` is **taken**. Our package is **`optima-ai`** (CLI binary: `optima`).
 
-### Option A — one command (recommended)
+| Channel | Command |
+|---------|---------|
+| **npm / pnpm / yarn** | `npm i -D optima-ai` ← postinstall wires skills into the project |
+| **npx** | `npx optima-ai init --host all` |
+| **GitHub** | `npx github:julienlhk/optima init` |
+| **Skills CLI** | `npx skills add julienlhk/optima` |
+| **Global** | `npm i -g optima-ai` then `optima init` |
+| **Brew** | `brew install julienlhk/tap/optima` *(after tap publish)* |
 
-From the target project root:
+Full details: [docs/install.md](./docs/install.md)
 
-```bash
-npx --yes github:julienlhk/optima init --host all
-npx --yes github:julienlhk/optima doctor
-```
-
-### Option B — agent skills CLI
-
-```bash
-npx skills add julienlhk/optima
-```
-
-Installs the `optima`, `context-engineering`, and `finops-zones` skills for hosts that speak the skills format.
-
-### Option C — from a local clone
+### npm (recommended)
 
 ```bash
-git clone https://github.com/julienlhk/optima.git
-cd optima && pnpm install && pnpm build
-cd /path/to/your-app
-npx /path/to/optima init --host all
+cd your-app
+npm install -D optima-ai
+# skills + rules land in your project automatically
+npx optima doctor
 ```
+
+Skip auto-wiring: `OPTIMA_SKIP_POSTINSTALL=1 npm i -D optima-ai` then `npx optima init` when ready.
 
 ### What gets installed
 
@@ -100,14 +96,25 @@ npx /path/to/optima init --host all
 ```mermaid
 sequenceDiagram
   participant Dev
-  participant NPX as npx_optima
+  participant NPM as npm_install
+  participant Post as postinstall
   participant Repo as Your_repo
   participant Agent as Coding_agent
-  Dev->>NPX: optima init --host all
-  NPX->>Repo: rules_skills_ignores_runtime
+  Dev->>NPM: npm i -D optima-ai
+  NPM->>Post: run postinstall
+  Post->>Repo: rules_skills_ignores_runtime
   Dev->>Agent: normal coding session
   Agent->>Repo: reads optima rules and skills
   Agent-->>Dev: fewer tokens same correctness
+```
+
+### From a local clone
+
+```bash
+git clone https://github.com/julienlhk/optima.git
+cd optima && pnpm install && pnpm build
+cd /path/to/your-app
+npx /path/to/optima init --host all
 ```
 
 ---
@@ -270,6 +277,7 @@ Reproduce micro-benches: `pnpm optima bench` and [benchmarks/RESULTS.md](./bench
 
 | Doc | Contents |
 |-----|----------|
+| [Install](./docs/install.md) | npm / npx / git / brew channels |
 | [Architecture](./docs/architecture.md) | System diagrams, install & analyze flows |
 | [Taxonomy](./docs/taxonomy.md) | 7 layers, technique cards |
 | [Adopting](./docs/adopting.md) | Greenfield vs brownfield rollout |

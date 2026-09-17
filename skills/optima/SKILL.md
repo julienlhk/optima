@@ -19,8 +19,9 @@ Optima is the optimization layer for AI coding agents in this repository. Cut av
 ## Install (for humans)
 
 ```bash
-npx --yes github:julienlhk/optima init --host all
-# or
+npm i -D optima-ai
+# or one-shot:
+npx optima-ai init --host all
 npx skills add julienlhk/optima
 ```
 
