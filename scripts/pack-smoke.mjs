@@ -11,8 +11,8 @@ import { execFileSync } from "node:child_process";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dir = await mkdtemp(join(tmpdir(), "optima-smoke-"));
 
-function run(cmd, args, cwd) {
-  execFileSync(cmd, args, { cwd, stdio: "inherit", env: process.env });
+function run(cmd, args, cwd, env = process.env) {
+  execFileSync(cmd, args, { cwd, stdio: "inherit", env });
 }
 
 try {
@@ -34,7 +34,11 @@ try {
   );
 
   console.log("[smoke] installing tarball into", dir);
-  run("npm", ["install", tgz], dir);
+  run("npm", ["install", tgz], dir, {
+    ...process.env,
+    INIT_CWD: dir,
+    OPTIMA_PROJECT_ROOT: dir,
+  });
 
   for (const p of [
     "OPTIMA_RUNTIME.md",

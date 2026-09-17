@@ -2,7 +2,7 @@
  * Shared Optima skill installer — used by CLI bin and npm postinstall.
  */
 import { access, constants, cp, mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { dirname, join, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const PACKAGE_ROOT = join(
@@ -178,9 +178,16 @@ export async function doctor(projectDir) {
 
 /** Resolve the consumer project when installed via npm/pnpm/yarn. */
 export function resolveConsumerRoot() {
-  // npm/pnpm set INIT_CWD to the directory where the user ran install
+  if (process.env.OPTIMA_PROJECT_ROOT) return process.env.OPTIMA_PROJECT_ROOT;
+
+  const cwd = process.cwd();
+  // postinstall runs with cwd = .../node_modules/optima-ai
+  const marker = `${sep}node_modules${sep}`;
+  const idx = cwd.lastIndexOf(marker);
+  if (idx !== -1) return cwd.slice(0, idx);
+
   if (process.env.INIT_CWD) return process.env.INIT_CWD;
-  return process.cwd();
+  return cwd;
 }
 
 /** True when installing inside the Optima monorepo itself. */
