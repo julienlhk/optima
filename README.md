@@ -10,6 +10,14 @@ Install it into a repo → agents waste fewer tokens. Use the libraries in your 
 
 Costs below use **Claude Sonnet-class list prices** from Optima’s catalog: **$3 / 1M input**, **$15 / 1M output**, **$0.30 / 1M cache read**. Your bill depends on model, workload, and whether the agent follows the rules.
 
+### Start with any AI agent
+
+Paste this repo into Cursor, Claude, Codex, or any coding agent and ask it to adopt Optima:
+
+> Install and adapt [https://github.com/julienlhk/optima](https://github.com/julienlhk/optima) (or `npm i -D optima-ai`) into this project, wire the skills/rules, and keep using Optima by default for token-efficient work.
+
+The agent should install the package, run `npx optima init`, and follow the always-on rules/skills from then on — you don’t need a separate manual setup ritual.
+
 ---
 
 ## What changes for you (before → after)
