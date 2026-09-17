@@ -1,0 +1,34 @@
+{
+  "name": "@ai-opt/cli",
+  "version": "1.0.0",
+  "description": "AI Opt CLI — init, install, doctor, analyze, classify, bench, estimate.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "ai-opt": "./dist/bin.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "templates", "skills"],
+  "scripts": {
+    "build": "tsup src/bin.ts src/index.ts --format esm --dts --clean && node ../../scripts/bundle-cli-assets.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist templates skills"
+  },
+  "dependencies": {
+    "@ai-opt/analyze": "workspace:*",
+    "@ai-opt/cache": "workspace:*",
+    "@ai-opt/classify": "workspace:*",
+    "@ai-opt/compress": "workspace:*",
+    "@ai-opt/core": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

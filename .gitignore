@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.pnpm-store/
+*.tsbuildinfo
+.DS_Store
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+.turbo/
+.vite/
+tmp/
+.temp/
+.tmp-tests/
+packages/cli/templates/
+packages/cli/skills/

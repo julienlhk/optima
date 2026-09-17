@@ -1,0 +1,61 @@
+import type { ModelPricing } from "./types.js";
+
+/** Versioned default catalog — override at runtime via TokenMeter catalog arg. */
+export const DEFAULT_PRICING: ModelPricing[] = [
+  {
+    id: "claude-sonnet-4",
+    provider: "anthropic",
+    inputPerMTok: 3.0,
+    outputPerMTok: 15.0,
+    cacheReadPerMTok: 0.3,
+    cacheWritePerMTok: 3.75,
+  },
+  {
+    id: "claude-haiku-4",
+    provider: "anthropic",
+    inputPerMTok: 1.0,
+    outputPerMTok: 5.0,
+    cacheReadPerMTok: 0.1,
+    cacheWritePerMTok: 1.25,
+  },
+  {
+    id: "claude-opus-4",
+    provider: "anthropic",
+    inputPerMTok: 15.0,
+    outputPerMTok: 75.0,
+    cacheReadPerMTok: 1.5,
+    cacheWritePerMTok: 18.75,
+  },
+  {
+    id: "gpt-4.1",
+    provider: "openai",
+    inputPerMTok: 2.0,
+    outputPerMTok: 8.0,
+    cacheReadPerMTok: 0.5,
+    cacheWritePerMTok: 2.0,
+  },
+  {
+    id: "gpt-4.1-mini",
+    provider: "openai",
+    inputPerMTok: 0.4,
+    outputPerMTok: 1.6,
+    cacheReadPerMTok: 0.1,
+    cacheWritePerMTok: 0.4,
+  },
+  {
+    id: "gemini-2.5-pro",
+    provider: "google",
+    inputPerMTok: 1.25,
+    outputPerMTok: 10.0,
+    cacheReadPerMTok: 0.315,
+    cacheWritePerMTok: 1.25,
+  },
+  {
+    id: "gemini-2.5-flash",
+    provider: "google",
+    inputPerMTok: 0.15,
+    outputPerMTok: 0.6,
+    cacheReadPerMTok: 0.0375,
+    cacheWritePerMTok: 0.15,
+  },
+];

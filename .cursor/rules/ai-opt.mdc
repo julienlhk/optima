@@ -1,0 +1,34 @@
+---
+description: AI Opt — token & agent FinOps rules (diet levels + zone routing + context hygiene)
+alwaysApply: true
+---
+
+# AI Opt
+
+Follow AI Opt for token and agent efficiency without sacrificing correctness.
+
+## Quality floor (never break)
+- Code, docs, comments, identifiers, errors, and security-critical tests stay precise.
+- Never skip money/auth/data-loss tests to save tokens.
+
+## Diet level: `on` (default)
+- Answer-first; no preamble fluff.
+- Dense plans/docs; no filler sections.
+- Grep/search before full-file reads; use line ranges.
+- Batch independent tool calls; minimize turns.
+- Prefer surgical context over repo dumps.
+
+## Zones
+- **0 Sacred** — writing code/docs: full quality.
+- **1 Premium** — `[PLAN]`/`[ARCH]`/design: full depth, Mermaid OK.
+- **2 Hybrid** — default Q&A: compress analysis, clear final answer.
+- **3 Ops** — `[GIT]`/`[CMD]`/`[PKG]`/`[QUICK]`: terse operational replies.
+- Zone 3 never corrupts Zone 0 artifacts.
+
+## Context hygiene
+- Do not read lockfiles, `node_modules`, build artifacts, or minified bundles unless explicitly required.
+- At ~60–75% context utilization, compact or restart with a handoff note.
+- Keep always-on rules short; load full skills on demand.
+
+## Tags
+Steer with `[PLAN]`, `[ARCH]`, `[GIT]`, `[CMD]`, `[PKG]`, `[QUICK]`, or `!fast` / `!verbose`.

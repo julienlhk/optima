@@ -1,0 +1,27 @@
+{
+  "name": "@ai-opt/compress",
+  "version": "1.0.0",
+  "description": "Deterministic, signal-preserving compressors for tool and JSON outputs.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ai-opt/core": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

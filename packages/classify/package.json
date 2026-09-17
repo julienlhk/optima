@@ -1,0 +1,28 @@
+{
+  "name": "@ai-opt/classify",
+  "version": "1.0.0",
+  "description": "AI optimization taxonomy and session/prompt classifiers.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schema": "./dist/taxonomy.schema.json"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean && node ../../scripts/copy-schema.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@ai-opt/core": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

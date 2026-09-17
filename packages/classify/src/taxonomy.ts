@@ -1,0 +1,255 @@
+import type { OptimizationTechnique } from "@ai-opt/core";
+
+export const TAXONOMY: OptimizationTechnique[] = [
+  {
+    id: "ctx.ignore_boundaries",
+    name: "Ignore boundaries",
+    layer: "input_context",
+    effort: "low",
+    risk: "low",
+    evidence: "behavioral",
+    summary:
+      "Exclude lockfiles, node_modules, build artifacts, caches, and binary noise from agent context.",
+    whenToUse: ["Any coding-agent workspace", "Large monorepos"],
+    antiPatterns: ["Ignoring needed assets without allowlists", "Overwriting team ignores silently"],
+  },
+  {
+    id: "ctx.surgical_retrieval",
+    name: "Surgical retrieval",
+    layer: "input_context",
+    effort: "medium",
+    risk: "low",
+    evidence: "measured",
+    summary:
+      "Prefer symbol/section/skeleton reads and grep-before-read over full-file or repo dumps.",
+    whenToUse: ["Code exploration", "Large files", "Repeated symbol lookups"],
+    antiPatterns: ["Reading entire files for a single identifier"],
+    relatedIds: ["sess.tool_batching"],
+  },
+  {
+    id: "ctx.progressive_disclosure",
+    name: "Progressive disclosure",
+    layer: "input_context",
+    effort: "medium",
+    risk: "low",
+    evidence: "behavioral",
+    summary:
+      "Keep always-on rules short; load full skills/docs only when triggered.",
+    whenToUse: ["Agent skills", "Always-on rules", "Large policy packs"],
+    antiPatterns: ["Pasting full skills into always-on rules"],
+  },
+  {
+    id: "ctx.compaction",
+    name: "Session compaction",
+    layer: "input_context",
+    effort: "high",
+    risk: "medium",
+    evidence: "measured",
+    summary:
+      "Summarize or restart sessions near ~60–75% context utilization; preserve must-keep manifests.",
+    whenToUse: ["Long agent sessions", "Multi-phase work"],
+    antiPatterns: ["Compacting sacred decision records without recovery IDs"],
+  },
+  {
+    id: "out.zone_routing",
+    name: "Zone-based output routing",
+    layer: "output",
+    effort: "low",
+    risk: "low",
+    evidence: "behavioral",
+    summary:
+      "Route replies into sacred/premium/hybrid/ops zones so ops stay terse without corrupting code quality.",
+    whenToUse: ["Coding agents", "Mixed planning and terminal work"],
+    antiPatterns: ["Applying ops/caveman style to source or docs"],
+    relatedIds: ["qual.sacred_zone"],
+  },
+  {
+    id: "out.diet_levels",
+    name: "Diet verbosity levels",
+    layer: "output",
+    effort: "low",
+    risk: "medium",
+    evidence: "measured",
+    summary:
+      "Use off/lite/on/ultra levels; ultra telegraphs chat only, never code/tests/docs.",
+    whenToUse: ["Chatty agents", "Cost-sensitive teams"],
+    antiPatterns: ["Ultra mode on correctness-critical narrative"],
+  },
+  {
+    id: "out.tool_filters",
+    name: "Tool output filters",
+    layer: "output",
+    effort: "medium",
+    risk: "medium",
+    evidence: "measured",
+    summary:
+      "Compress noisy CLI/test/docker/git outputs into signal-preserving summaries before the model sees them.",
+    whenToUse: ["Verbose test runners", "Container/k8s logs"],
+    antiPatterns: ["Dropping failing assertion details"],
+  },
+  {
+    id: "cache.stable_prefix",
+    name: "Stable prompt prefix",
+    layer: "cache",
+    effort: "medium",
+    risk: "low",
+    evidence: "measured",
+    summary:
+      "Put immutable system/tools first and variable user data last so provider KV caches hit.",
+    whenToUse: ["Any API with prompt caching", "Multi-turn agents"],
+    antiPatterns: ["Timestamps or shuffled tools in the prefix"],
+    relatedIds: ["cache.breakpoints"],
+  },
+  {
+    id: "cache.breakpoints",
+    name: "Cache breakpoints",
+    layer: "cache",
+    effort: "medium",
+    risk: "low",
+    evidence: "measured",
+    summary:
+      "Mark cache_control breakpoints on stable blocks; monitor cache_read vs cache_write tokens.",
+    whenToUse: ["Anthropic/OpenAI cached-input pricing", "Long system prompts"],
+    antiPatterns: ["Prefix below provider minimum length"],
+  },
+  {
+    id: "cache.ttl_economics",
+    name: "TTL economics",
+    layer: "cache",
+    effort: "low",
+    risk: "low",
+    evidence: "estimated",
+    summary:
+      "Choose 5m vs longer TTLs based on request cadence; keep high-traffic prefixes warm.",
+    whenToUse: ["Interactive agents with idle gaps", "Batch jobs"],
+    antiPatterns: ["Assuming cache always hits without metrics"],
+  },
+  {
+    id: "route.cheap_explore",
+    name: "Cheap explore / strong verify",
+    layer: "model_routing",
+    effort: "medium",
+    risk: "medium",
+    evidence: "measured",
+    summary:
+      "Bound search on cheaper models; keep correctness verification on the strong model.",
+    whenToUse: ["Sub-agents", "Repo search", "Draft then review"],
+    antiPatterns: ["Letting weak models over-explore unbounded"],
+  },
+  {
+    id: "route.task_class",
+    name: "Task-class model routing",
+    layer: "model_routing",
+    effort: "high",
+    risk: "medium",
+    evidence: "estimated",
+    summary:
+      "Map task classes (ops, plan, code, security) to model tiers with quality floors.",
+    whenToUse: ["Multi-model platforms", "Org FinOps policies"],
+    antiPatterns: ["Routing security-critical work to cheapest model"],
+  },
+  {
+    id: "sess.turn_minimize",
+    name: "Turn minimization",
+    layer: "session_agent",
+    effort: "low",
+    risk: "medium",
+    evidence: "behavioral",
+    summary:
+      "Batch tool calls, stop early when answered, avoid narration loops.",
+    whenToUse: ["Agentic coding", "High turn-cost sessions"],
+    antiPatterns: ["Skipping verification to save a turn"],
+  },
+  {
+    id: "sess.tool_batching",
+    name: "Tool batching",
+    layer: "session_agent",
+    effort: "low",
+    risk: "low",
+    evidence: "behavioral",
+    summary: "Issue independent reads/greps in parallel rather than serial ping-pong.",
+    whenToUse: ["Multi-file investigation"],
+    antiPatterns: ["Batching dependent steps that need prior results"],
+  },
+  {
+    id: "sess.subagent_bounds",
+    name: "Sub-agent bounds",
+    layer: "session_agent",
+    effort: "medium",
+    risk: "medium",
+    evidence: "measured",
+    summary:
+      "Cap sub-agent scope, file budget, and depth; return structured findings only.",
+    whenToUse: ["Fan-out research", "Parallel reviews"],
+    antiPatterns: ["Nested persona routers that multiply context"],
+  },
+  {
+    id: "finops.budgets",
+    name: "Token and USD budgets",
+    layer: "metering_finops",
+    effort: "medium",
+    risk: "low",
+    evidence: "measured",
+    summary: "Track soft/hard token and dollar limits with structured meter events.",
+    whenToUse: ["Production apps", "Chargeback", "CI agent jobs"],
+    antiPatterns: ["Hard-killing mid-write without salvage"],
+  },
+  {
+    id: "finops.waste_heuristics",
+    name: "Session waste heuristics",
+    layer: "metering_finops",
+    effort: "medium",
+    risk: "low",
+    evidence: "estimated",
+    summary:
+      "Score transcripts for broad globs, retry loops, noisy reads, and long thin prompts.",
+    whenToUse: ["Cursor/Claude forensics", "Team coaching"],
+    antiPatterns: ["Treating heuristics as billing truth"],
+  },
+  {
+    id: "finops.cost_models",
+    name: "Versioned cost models",
+    layer: "metering_finops",
+    effort: "low",
+    risk: "low",
+    evidence: "estimated",
+    summary: "Maintain overridable per-model USD/MTok tables including cache rates.",
+    whenToUse: ["Dashboards", "Estimators", "What-if planning"],
+    antiPatterns: ["Hard-coding stale prices in app logic"],
+  },
+  {
+    id: "qual.sacred_zone",
+    name: "Sacred quality floor",
+    layer: "quality_floors",
+    effort: "low",
+    risk: "low",
+    evidence: "behavioral",
+    summary:
+      "Never apply telegraphic compression to code, docs, comments, or critical tests.",
+    whenToUse: ["All diet/zone policies"],
+    antiPatterns: ["Trading correctness for token savings"],
+    relatedIds: ["out.zone_routing", "out.diet_levels"],
+  },
+  {
+    id: "qual.critical_tests",
+    name: "Protect critical tests",
+    layer: "quality_floors",
+    effort: "low",
+    risk: "high",
+    evidence: "behavioral",
+    summary:
+      "Never skip money, auth, or data-loss tests to reduce token spend.",
+    whenToUse: ["Diet policies that cap test volume"],
+    antiPatterns: ["≤N tests rule overriding safety-critical coverage"],
+  },
+];
+
+export function getTechnique(id: string): OptimizationTechnique | undefined {
+  return TAXONOMY.find((t) => t.id === id);
+}
+
+export function techniquesByLayer(
+  layer: OptimizationTechnique["layer"],
+): OptimizationTechnique[] {
+  return TAXONOMY.filter((t) => t.layer === layer);
+}

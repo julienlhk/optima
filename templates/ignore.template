@@ -1,0 +1,83 @@
+# Dependencies & package managers
+node_modules/
+bower_components/
+.pnp/
+.pnp.js
+.yarn/
+vendor/
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+.Python
+.tox/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Lockfiles (prefer reading package.json / pyproject.toml)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+Bun.lock
+Bun.lockb
+Cargo.lock
+poetry.lock
+Pipfile.lock
+composer.lock
+Gemfile.lock
+go.sum
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.turbo/
+.vercel/
+.cache/
+coverage/
+*.tsbuildinfo
+*.min.js
+*.min.css
+*.map
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs & local env
+*.log
+logs/
+.env
+.env.*
+!.env.example
+
+# Databases & binaries
+*.sqlite
+*.sqlite3
+*.db
+*.wasm
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Media (vision-token heavy) — allowlist in project if needed
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.zip
+*.tar
+*.gz
+*.7z
+
+# Large generated
+*.pdf

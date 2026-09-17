@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-opt.dev/schemas/taxonomy.schema.json",
+  "title": "AI Opt Optimization Taxonomy",
+  "type": "object",
+  "required": ["version", "techniques"],
+  "properties": {
+    "version": { "type": "string" },
+    "techniques": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "layer",
+          "effort",
+          "risk",
+          "evidence",
+          "summary",
+          "whenToUse",
+          "antiPatterns"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9_.]+$" },
+          "name": { "type": "string" },
+          "layer": {
+            "type": "string",
+            "enum": [
+              "input_context",
+              "output",
+              "cache",
+              "model_routing",
+              "session_agent",
+              "metering_finops",
+              "quality_floors"
+            ]
+          },
+          "effort": { "type": "string", "enum": ["low", "medium", "high"] },
+          "risk": { "type": "string", "enum": ["low", "medium", "high"] },
+          "evidence": {
+            "type": "string",
+            "enum": ["measured", "behavioral", "estimated"]
+          },
+          "summary": { "type": "string" },
+          "whenToUse": { "type": "array", "items": { "type": "string" } },
+          "antiPatterns": { "type": "array", "items": { "type": "string" } },
+          "relatedIds": { "type": "array", "items": { "type": "string" } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
