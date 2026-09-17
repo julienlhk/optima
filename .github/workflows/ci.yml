@@ -22,12 +22,14 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: node packages/cli/dist/bin.js bench
-      - run: node bin/optima.mjs help
+      - run: node bin/optima.js help
       - run: node packages/cli/dist/bin.js taxonomy | node -e "let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>{const j=JSON.parse(s); if(!j.techniques||j.techniques.length<10) process.exit(1);})"
       - name: Validate init in temp dir
         run: |
           TMP=$(mktemp -d)
           cd "$TMP"
-          node "$GITHUB_WORKSPACE/bin/optima.mjs" init --host all
-          node "$GITHUB_WORKSPACE/bin/optima.mjs" doctor
+          node "$GITHUB_WORKSPACE/bin/optima.js" init --host all
+          node "$GITHUB_WORKSPACE/bin/optima.js" doctor
           node "$GITHUB_WORKSPACE/packages/cli/dist/bin.js" doctor
+      - name: Pack smoke
+        run: node scripts/pack-smoke.mjs
