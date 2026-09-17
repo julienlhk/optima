@@ -2,9 +2,7 @@
 
 Optima is meant to feel like a normal package: install it, and your project’s AI agents get the skillset.
 
-> **Why not `npm install optima`?**  
-> The bare npm name [`optima`](https://www.npmjs.com/package/optima) is already taken (unrelated 2017 stub).  
-> Our registry name is **`optima-ai`**. The CLI binary is still **`optima`**.
+**Package:** `optima-ai` · **CLI:** `optima`
 
 ---
 
@@ -45,7 +43,7 @@ npm install -D optima-ai
 # or:  yarn add -D optima-ai
 ```
 
-On install, Optima’s `postinstall` writes into **your project** (not into a venv):
+On install, Optima’s `postinstall` writes into **your project**:
 
 | Path | Role |
 |------|------|
@@ -68,33 +66,14 @@ npx optima init --host all                      # run wiring manually
 
 ---
 
-## Why not a Python venv?
-
-Agent skills live in **project config folders** (`.cursor/`, `.claude/`, `AGENTS.md`).  
-They are not Python modules, so they don’t go into a venv.
-
-For **Python LLM apps** that call models in code, use the TypeScript libraries from Node, or call `optima estimate` / meters from a small Node sidecar. A future `pip install optima-ai` could wrap the same meters — not required for agent skill install.
-
----
-
-## Publishing status
-
-| Artifact | Status |
-|----------|--------|
-| GitHub repo | Live — https://github.com/julienlhk/optima |
-| npm `optima-ai` | Publish with `npm publish` (needs npm login + build) |
-| Homebrew tap | Formula stub in `packaging/homebrew/optima.rb` |
-| npm bare `optima` | **Unavailable** (taken) |
-
-### Publish to npm (maintainers)
+## Publishing (maintainers)
 
 ```bash
 pnpm install && pnpm build
 npm publish --access public
-# package name: optima-ai
 ```
 
-### After publish, users run
+After publish:
 
 ```bash
 npm i -D optima-ai

@@ -58,8 +58,6 @@ flowchart LR
 
 ## Install into a repo (like a package)
 
-> The npm name `optima` is **taken**. Our package is **`optima-ai`** (CLI binary: `optima`).
-
 | Channel | Command |
 |---------|---------|
 | **npm / pnpm / yarn** | `npm i -D optima-ai` ← postinstall wires skills into the project |
