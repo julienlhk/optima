@@ -8,7 +8,7 @@
 ## Enterprise checklist
 
 - [ ] Legal review of MIT
-- [ ] Pin package / commit SHA for `npx github:julienlhk/optima`
+- [ ] Pin `optima-ai` version in package.json
 - [ ] Commit generated rules (change control)
 - [ ] Define org diet level + ignore allowlists
 - [ ] Wire `TokenMeter` hard limits on billable workloads

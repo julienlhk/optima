@@ -224,19 +224,31 @@ flowchart TD
 
 ## Install
 
-| Channel | Command |
-|---------|---------|
-| **npm / pnpm / yarn** | `npm i -D optima-ai` |
-| **npx** | `npx optima-ai init --host all` |
-| **GitHub** | `npx github:julienlhk/optima init` |
-| **Skills CLI** | `npx skills add julienlhk/optima` |
-| **Global** | `npm i -g optima-ai` then `optima init` |
-| **Brew** | `brew install julienlhk/tap/optima` *(after tap publish)* |
-
 ```bash
 npm install -D optima-ai
-npx optima doctor
 ```
+
+That installs the package and wires Optima skills/rules into your project. Then:
+
+```bash
+npx optima doctor
+npx optima bench
+npx optima estimate --file README.md --model claude-sonnet-4
+```
+
+| Command | What it does |
+|---------|----------------|
+| `npm i -D optima-ai` | Install + auto-wire skills/rules/ignores |
+| `npx optima init` | Re-run wiring (optional `--host cursor`) |
+| `npx optima doctor` | Verify install |
+| `npx optima analyze` | Score Cursor transcripts |
+| `npx optima classify <file>` | Recommend techniques |
+| `npx optima estimate --file X` | Token + USD estimate |
+| `npx optima bench` | Micro-bench |
+| `npx optima taxonomy` | Technique catalog |
+| `npx optima help` | Help |
+
+Global (optional): `npm i -g optima-ai` → run `optima` on your PATH.
 
 | Artifact | Purpose |
 |----------|---------|
@@ -308,7 +320,9 @@ const slim = compressAuto(hugeTestLog, "test");
 
 ---
 
-## Packages
+## Libraries (from this monorepo)
+
+When developing against the Optima repo locally:
 
 | Package | Role |
 |---------|------|
@@ -317,21 +331,8 @@ const slim = compressAuto(hugeTestLog, "test");
 | `@optima/compress` | JSON / test / git compressors |
 | `@optima/cache` | Cache-aware prompts + lint |
 | `@optima/analyze` | Cursor transcript waste → rules |
-| `@optima/cli` | `optima` CLI |
 
----
-
-## CLI
-
-| Command | What it does |
-|---------|----------------|
-| `optima init --host all` | Install rules, skills, ignores |
-| `optima doctor` | Verify install |
-| `optima analyze` | Score Cursor transcripts |
-| `optima classify <file\|->` | Recommend techniques |
-| `optima estimate --file X --model M` | Token + USD estimate |
-| `optima bench` | Micro-bench |
-| `optima taxonomy` | Full technique catalog |
+App usage after `npm i -D optima-ai` is via the **`optima` CLI** above (skills + analyze/estimate/bench).
 
 ---
 

@@ -10,7 +10,7 @@ import {
   isOptimaSourceTree,
   resolveConsumerRoot,
   skillInstall,
-} from "./lib/install.mjs";
+} from "./lib/install.js";
 
 if (process.env.OPTIMA_SKIP_POSTINSTALL === "1") {
   process.exit(0);

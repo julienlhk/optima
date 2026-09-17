@@ -1,9 +1,13 @@
 # Changelog
 
-## 1.0.0 — 2026-09-17
+## 1.0.1
 
-- Brand as **Optima**; npm package **`optima-ai`**, CLI **`optima`**
-- **`npm i -D optima-ai`** postinstall wires skills/rules into the consumer project
-- Install channels: npm, npx, GitHub, skills CLI, brew formula stub
-- Libraries: `@optima/*` — core, classify, compress, cache, analyze, cli
-- Enterprise docs, taxonomy, CI, descriptive README
+- Self-contained CLI (workspace packages bundled) — `npx optima analyze|bench|estimate|…` works after `npm i -D optima-ai`
+- Clean install docs: `npm i -D optima-ai` / `npx optima …` only
+- Pack smoke test before publish
+
+## 1.0.0
+
+- Initial npm release of `optima-ai`
+- Postinstall wires skills/rules into the consumer project
+- Skills, templates, runtime protocol

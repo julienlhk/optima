@@ -17,7 +17,7 @@
   },
   "files": ["dist", "templates", "skills"],
   "scripts": {
-    "build": "tsup src/bin.ts src/index.ts --format esm --dts --clean && node ../../scripts/bundle-cli-assets.mjs",
+    "build": "tsup && node ../../scripts/bundle-cli-assets.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "clean": "rm -rf dist templates skills"
   },

@@ -1,18 +1,19 @@
 {
   "name": "optima-ai",
-  "version": "1.0.0",
-  "description": "Optima — npm-installable AI agent & token optimization. Installs skills/rules into your project like a package.",
+  "version": "1.0.1",
+  "description": "Optima — AI agent & token optimization. npm install wires skills into your project.",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "optima": "./bin/optima.mjs",
-    "optima-ai": "./bin/optima.mjs"
+    "optima": "./bin/optima.js",
+    "optima-ai": "./bin/optima.js"
   },
+  "main": "./bin/optima.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/julienlhk/optima.git"
   },
-  "homepage": "https://github.com/julienlhk/optima#readme",
+  "homepage": "https://www.npmjs.com/package/optima-ai",
   "bugs": {
     "url": "https://github.com/julienlhk/optima/issues"
   },
@@ -38,25 +39,20 @@
     "skills",
     "templates",
     "packages/cli/dist",
-    "packages/core/dist",
-    "packages/classify/dist",
-    "packages/compress/dist",
-    "packages/cache/dist",
-    "packages/analyze/dist",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
-    "postinstall": "node ./bin/postinstall.mjs",
+    "postinstall": "node ./bin/postinstall.js",
     "build": "pnpm -r --filter './packages/*' run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "pnpm -r --filter './packages/*' run typecheck",
     "lint": "pnpm -r --filter './packages/*' run typecheck",
-    "optima": "node bin/optima.mjs",
-    "bench": "pnpm --filter @optima/cli exec node dist/bin.js bench",
+    "optima": "node bin/optima.js",
+    "pack:smoke": "node scripts/pack-smoke.mjs",
     "clean": "pnpm -r --filter './packages/*' run clean",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build && node scripts/pack-smoke.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",

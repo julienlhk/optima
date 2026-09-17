@@ -1,6 +1,6 @@
 ---
 name: optima
-description: Token and agent FinOps for this repo — diet levels, zone routing, context hygiene, cache-aware API guidance. Use when optimizing tokens, costs, agent verbosity, or context packing. Install via npx optima init or npx skills add julienlhk/optima.
+description: Token and agent FinOps for this repo — diet levels, zone routing, context hygiene, cache-aware API guidance. Use when optimizing tokens, costs, agent verbosity, or context packing. Install: npm i -D optima-ai.
 ---
 
 # Optima
@@ -20,9 +20,7 @@ Optima is the optimization layer for AI coding agents in this repository. Cut av
 
 ```bash
 npm i -D optima-ai
-# or one-shot:
-npx optima-ai init --host all
-npx skills add julienlhk/optima
+npx optima init
 ```
 
 ## Levels
