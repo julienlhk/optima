@@ -52,7 +52,7 @@
     "optima": "node bin/optima.js",
     "pack:smoke": "node scripts/pack-smoke.mjs",
     "clean": "pnpm -r --filter './packages/*' run clean",
-    "prepublishOnly": "pnpm build && node scripts/pack-smoke.mjs"
+    "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",

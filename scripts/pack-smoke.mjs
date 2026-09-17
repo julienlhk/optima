@@ -34,11 +34,9 @@ try {
   );
 
   console.log("[smoke] installing tarball into", dir);
-  run("npm", ["install", tgz], dir, {
-    ...process.env,
-    INIT_CWD: dir,
-    OPTIMA_PROJECT_ROOT: dir,
-  });
+  const installEnv = { ...process.env, INIT_CWD: dir, OPTIMA_PROJECT_ROOT: dir };
+  delete installEnv.OPTIMA_SKIP_POSTINSTALL;
+  run("npm", ["install", tgz], dir, installEnv);
 
   for (const p of [
     "OPTIMA_RUNTIME.md",
