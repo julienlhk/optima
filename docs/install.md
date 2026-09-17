@@ -10,7 +10,7 @@ Postinstall wires skills/rules into your project. Then use:
 
 ```bash
 npx optima doctor
-npx optima init              # re-wire if needed
+npx optima debug [--problem "..."] [--write]
 npx optima analyze
 npx optima classify README.md
 npx optima estimate --file README.md --model claude-sonnet-4

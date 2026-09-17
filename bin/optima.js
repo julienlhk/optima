@@ -1,10 +1,6 @@
 #!/usr/bin/env node
 /**
- * Public CLI for optima-ai — clean npm/npx usage:
- *   npm i -D optima-ai
- *   npx optima init
- *   npx optima doctor
- *   npx optima analyze | classify | estimate | bench | taxonomy
+ * Public CLI for optima-ai
  */
 import { spawn } from "node:child_process";
 import { join } from "node:path";
@@ -14,6 +10,7 @@ import {
   exists,
   skillInstall,
 } from "./lib/install.js";
+import { formatDebugReport, runDebug } from "./lib/debug.js";
 
 const ROOT = PACKAGE_ROOT;
 const BUILT = join(ROOT, "packages/cli/dist/bin.js");
@@ -38,6 +35,7 @@ Usage:
   npm i -D optima-ai
   npx optima init [--host all|cursor|claude|codex|windsurf]
   npx optima doctor
+  npx optima debug [--problem "..."] [--write] [--json]
   npx optima analyze [--days N] [--limit N] [--json] [--apply-rules]
   npx optima classify <file|->
   npx optima estimate --file <path> [--model id]
@@ -49,6 +47,24 @@ Env:
   OPTIMA_SKIP_POSTINSTALL=1   skip auto-wiring on npm install
   OPTIMA_HOST=cursor          limit hosts on install
 `);
+}
+
+function parseFlags(args) {
+  const flags = {};
+  const positional = [];
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a === "--write") flags.write = true;
+    else if (a === "--json") flags.json = true;
+    else if (a === "--problem" && args[i + 1]) {
+      flags.problem = args[++i];
+    } else if (a.startsWith("--problem=")) {
+      flags.problem = a.slice("--problem=".length);
+    } else {
+      positional.push(a);
+    }
+  }
+  return { flags, positional };
 }
 
 const argv = process.argv.slice(2);
@@ -76,6 +92,21 @@ if (cmd === "doctor") {
     if (!r.ok && !r.check.includes(".cursor")) failed += 1;
   }
   process.exit(failed === 0 ? 0 : 1);
+}
+
+if (cmd === "debug") {
+  const { flags } = parseFlags(argv.slice(1));
+  const report = await runDebug({
+    problem: flags.problem || "",
+    write: Boolean(flags.write),
+    projectDir: process.cwd(),
+  });
+  if (flags.json) {
+    console.log(JSON.stringify(report, null, 2));
+  } else {
+    console.log(formatDebugReport(report));
+  }
+  process.exit(0);
 }
 
 const advanced = new Set([

@@ -32,3 +32,7 @@ Follow Optima for token and agent efficiency without sacrificing correctness.
 
 ## Tags
 Steer with `[PLAN]`, `[ARCH]`, `[GIT]`, `[CMD]`, `[PKG]`, `[QUICK]`, or `!fast` / `!verbose`.
+
+## Debugging
+When something fails: run `npx optima debug`, then follow the optima-debug skill —
+hypothesize 5–7 causes → rank 1–2 → validate with logs → only then fix.

@@ -232,6 +232,7 @@ That installs the package and wires Optima skills/rules into your project. Then:
 
 ```bash
 npx optima doctor
+npx optima debug
 npx optima bench
 npx optima estimate --file README.md --model claude-sonnet-4
 ```
@@ -241,6 +242,7 @@ npx optima estimate --file README.md --model claude-sonnet-4
 | `npm i -D optima-ai` | Install + auto-wire skills/rules/ignores |
 | `npx optima init` | Re-run wiring (optional `--host cursor`) |
 | `npx optima doctor` | Verify install |
+| `npx optima debug` | Structured debug probe + worksheet (`--problem` / `--write`) |
 | `npx optima analyze` | Score Cursor transcripts |
 | `npx optima classify <file>` | Recommend techniques |
 | `npx optima estimate --file X` | Token + USD estimate |
@@ -260,6 +262,20 @@ Global (optional): `npm i -g optima-ai` → run `optima` on your PATH.
 | `OPTIMA_RUNTIME.md` | Full diet + zone protocol |
 
 More: [docs/install.md](./docs/install.md)
+
+### Privacy
+
+Optima does **not** store or upload your code. No accounts, no telemetry, no Optima servers. Install only writes files into **your** project. Details: [docs/security.md](./docs/security.md).
+
+### Debugging
+
+When something fails, don’t guess a fix first:
+
+```bash
+npx optima debug --problem "skills not applying" --write
+```
+
+That prints a local probe and a worksheet: **5–7 hypotheses → rank 1–2 → validate with logs → then fix.** Agent skill: `optima-debug`.
 
 ---
 

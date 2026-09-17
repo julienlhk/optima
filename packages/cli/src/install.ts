@@ -140,7 +140,7 @@ export async function initProject(
     }
     try {
       const skills = await skillsRoot();
-      for (const skill of ["optima", "context-engineering", "finops-zones"]) {
+      for (const skill of ["optima", "context-engineering", "finops-zones", "optima-debug"]) {
         await ensureDir(join(projectDir, `.cursor/skills/${skill}`));
         await writeCopy(
           join(skills, `${skill}/SKILL.md`),
@@ -185,7 +185,7 @@ export async function initProject(
   if (expand.includes("claude")) {
     try {
       const skills = await skillsRoot();
-      for (const skill of ["optima", "context-engineering", "finops-zones"]) {
+      for (const skill of ["optima", "context-engineering", "finops-zones", "optima-debug"]) {
         await ensureDir(join(projectDir, `.claude/skills/${skill}`));
         await writeCopy(
           join(skills, `${skill}/SKILL.md`),

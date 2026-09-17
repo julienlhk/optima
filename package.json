@@ -1,6 +1,6 @@
 {
   "name": "optima-ai",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Optima — AI agent & token optimization. npm install wires skills into your project.",
   "license": "MIT",
   "type": "module",

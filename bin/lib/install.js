@@ -95,16 +95,16 @@ export async function skillInstall(projectDir, host = "all", opts = {}) {
     ) {
       actions.push("wrote .cursor/rules/optima.mdc");
     }
-    for (const skill of ["optima", "context-engineering", "finops-zones"]) {
-      if (
-        await copySafe(
-          join(skills, skill),
-          join(projectDir, `.cursor/skills/${skill}`),
-        )
-      ) {
-        actions.push(`wrote .cursor/skills/${skill}`);
+      for (const skill of ["optima", "context-engineering", "finops-zones", "optima-debug"]) {
+        if (
+          await copySafe(
+            join(skills, skill),
+            join(projectDir, `.cursor/skills/${skill}`),
+          )
+        ) {
+          actions.push(`wrote .cursor/skills/${skill}`);
+        }
       }
-    }
   }
 
   if (hosts.includes("windsurf")) {
@@ -125,7 +125,7 @@ export async function skillInstall(projectDir, host = "all", opts = {}) {
   }
 
   if (hosts.includes("claude")) {
-    for (const skill of ["optima", "context-engineering", "finops-zones"]) {
+    for (const skill of ["optima", "context-engineering", "finops-zones", "optima-debug"]) {
       if (
         await copySafe(
           join(skills, skill),
