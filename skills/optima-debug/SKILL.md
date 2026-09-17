@@ -1,117 +1,162 @@
 ---
 name: optima-debug
-description: Structured debugging helper — hypothesize broadly, narrow to 1–2 likely causes, validate with logs before coding a fix. Use when debugging failures, flakes, wrong behavior, or "it doesn't work" reports.
+description: Structured debugging — frame the bug, list 5–7 category-diverse hypotheses, distill to 1–2, validate with local logs/doctor before any code fix. Use for failures, flakes, wrong behavior, or "it doesn't work".
 ---
 
 # Optima Debug
 
-## Overview
+## Hard rule
 
-Do **not** jump to a code fix. Use this protocol so you spend tokens on the right cause.
+**No code fix until a hypothesis is confirmed by evidence.**  
+Jumping to a patch is a failure of this skill.
 
-## When to use
+## Order (do not skip)
 
-- Bug, flake, regression, install failure, agent ignoring Optima rules
-- User says “debug this” / “why doesn’t it work”
-- Fix attempts keep missing
-
-## Protocol (mandatory order)
+```text
+Frame → Hypothesize (5–7) → Rank (1–2) → Instrument → Validate → Fix → Verify
+```
 
 ```mermaid
 flowchart TD
   frame[1_Frame] --> hypo[2_Hypothesize_5_to_7]
   hypo --> rank[3_Rank_to_1_or_2]
-  rank --> logs[4_Instrument_logs]
-  logs --> evidence[5_Validate_or_kill]
+  rank --> logs[4_Instrument]
+  logs --> evidence[5_Validate]
   evidence -->|confirmed| fix[6_Minimal_fix]
   evidence -->|killed| hypo
   fix --> verify[7_Verify_and_clean]
 ```
 
-### 1) Frame (3 bullets max)
+---
 
-| Field | Fill in |
-|-------|---------|
-| **Symptom** | What you observe (error text, wrong output, missing file) |
+### 1) Frame (3 lines max)
+
+| Field | Value |
+|-------|-------|
+| **Symptom** | Exact observation (error text, wrong output, missing path) |
 | **Expected** | What should happen |
-| **Scope** | When / where (command, host, env, after which change) |
+| **Scope** | Command / host / env / after which change |
+
+Bootstrap with a local probe (no network):
+
+```bash
+npx optima debug
+npx optima debug --problem "<one-line symptom>"
+npx optima debug --write   # optional: OPTIMA_DEBUG.md in the project only
+```
+
+---
 
 ### 2) Hypothesize 5–7 sources
 
-Cover **different categories** — do not list 7 variants of the same guess:
+Use **different categories** — not 7 flavors of the same guess:
 
-| # | Category | Example hypothesis |
-|---|----------|-------------------|
-| 1 | **Install / wiring** | Skills/rules never landed in this project |
+| # | Category | Starter prompt |
+|---|----------|----------------|
+| 1 | **Install / wiring** | Skills/rules never landed here |
 | 2 | **Host / agent** | Cursor/Claude not loading always-on rules |
-| 3 | **Config / env** | `OPTIMA_SKIP_POSTINSTALL`, wrong cwd, wrong host flag |
-| 4 | **Version / path** | Stale `optima-ai@1.0.0`, wrong bin, monorepo vs npm |
-| 5 | **Context / ignores** | Needed file excluded by `.cursorignore` |
+| 3 | **Config / env** | `OPTIMA_SKIP_POSTINSTALL`, wrong cwd, wrong `--host` |
+| 4 | **Version / path** | Stale `optima-ai`, wrong bin, monorepo vs npm |
+| 5 | **Context / ignores** | Needed file excluded by ignore boundaries |
 | 6 | **Logic / code** | Bug in compressor, meter, classifier, installer |
-| 7 | **External** | Provider API, permissions, sandbox EPERM |
+| 7 | **External** | Permissions, sandbox EPERM, provider API |
 
-Write each as: *If X were true, we would see Y.*
+Each hypothesis must be falsifiable:
+
+> **If** \<cause\> **were true, we would see** \<observable\>.
+
+---
 
 ### 3) Distill to 1–2 most likely
 
-For each top candidate:
+| Rank | Hypothesis | Why likely now | Fast disproof |
+|------|------------|----------------|---------------|
+| H1 | | | One command / log that kills it |
+| H2 | | | One command / log that kills it |
 
-| Hypothesis | Why likely | Fast disproof |
-|------------|------------|---------------|
-| H1 | … | One command or log that kills it |
-| H2 | … | One command or log that kills it |
+Park the rest. Do not investigate all seven.
 
-Discard the rest **for now** (keep the list; don’t investigate all).
+---
 
 ### 4) Instrument before fixing
 
-Add the **smallest** logs/checks that distinguish H1 vs H2:
+Add the **smallest** checks that distinguish H1 vs H2:
 
-- Prefer existing: `npx optima doctor`, `npx optima debug`, file existence, versions
-- If code: log inputs/outputs at the boundary (one function), not spray `console.log` everywhere
-- Logs must be **local stdout** only — never send elsewhere
+| Prefer | Avoid |
+|--------|-------|
+| `npx optima doctor` / `npx optima debug` | Spray `console.log` everywhere |
+| File exists + version + env dump | Logging secrets / full prompts |
+| One boundary log (in → out) | Remote logging / telemetry |
+
+Logs stay on **local stdout** (or `--write` into the project). Never send elsewhere.
+
+---
 
 ### 5) Validate
 
-| Result | Action |
-|--------|--------|
-| Hypothesis confirmed | Proceed to minimal fix |
-| Hypothesis killed | Promote next candidate; do not “fix anyway” |
-| Ambiguous | One more precise log; still no speculative rewrite |
+| Evidence | Action |
+|----------|--------|
+| Confirms H1/H2 | Proceed to minimal fix |
+| Kills H1/H2 | Promote next candidate — do **not** fix anyway |
+| Ambiguous | One tighter log; still no speculative rewrite |
+
+---
 
 ### 6) Fix
 
-- Smallest change that addresses the **validated** cause
-- Do not “clean up” unrelated code in the same pass
+- Smallest change for the **validated** cause only
+- No drive-by refactors in the same pass
 
 ### 7) Verify + clean
 
-- Re-run the failing command / repro
+- Re-run the failing repro
 - Remove temporary debug logs
-- Note what the real cause was (one line)
+- One-line root cause note
+
+---
+
+## Agent output template (fill before coding)
+
+```markdown
+### Frame
+- Symptom:
+- Expected:
+- Scope:
+
+### Hypotheses (5–7)
+1. [install] If …, we would see …
+2. [host] If …, we would see …
+3. [config] If …, we would see …
+4. [version] If …, we would see …
+5. [context] If …, we would see …
+6. [logic] If …, we would see …
+7. [external] If …, we would see …
+
+### Rank
+- H1: … | disproof: …
+- H2: … | disproof: …
+
+### Evidence gathered
+- …
+
+### Confirmed cause
+- …
+
+### Fix plan (only after confirmation)
+- …
+```
+
+---
 
 ## Anti-patterns
 
 | Don’t | Do |
 |-------|-----|
-| Rewrite a module on the first idea | Rank hypotheses first |
-| Add 40 logs | 2–3 discriminating logs |
-| Fix two unrelated things at once | One validated cause |
-| Blame the model with no evidence | Check install + doctor first |
+| Rewrite on the first idea | Rank, then disprove |
+| Add dozens of logs | 2–3 discriminating checks |
+| Fix two unrelated things | One validated cause |
+| Blame the model with no proof | `doctor` / install / paths first |
 
-## Optima-specific quick checks
+## Privacy
 
-```bash
-npx optima doctor
-npx optima debug
-npx optima debug --problem "skills not applying in Cursor"
-```
-
-## Verification checklist
-
-- [ ] Symptom / expected / scope written
-- [ ] ≥5 hypotheses across categories
-- [ ] Top 1–2 ranked with disproofs
-- [ ] Logs or doctor checks run **before** code fix
-- [ ] Fix matches validated cause
-- [ ] Temporary logs removed
+This skill and `optima debug` run **locally only**. No accounts, no Optima servers, no telemetry. Optional `--write` only creates `OPTIMA_DEBUG.md` in **your** project.

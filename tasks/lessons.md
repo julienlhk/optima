@@ -8,3 +8,4 @@
 - README must lead with concrete before/after cost examples, prompts, and flows so impact is obvious on first read.
 - Ship a structured debug protocol (hypothesize → rank → log → fix) as skill + `optima debug`; keep privacy claims explicit and accurate (local-only, no telemetry).
 - CI must track bin path renames (`optima.js`, not stale `.mjs`).
+- `packages/cli/skills` can go stale — `skillsRoot()` must require all SKILL.md files (including new skills), not just that the directory exists.

@@ -24,22 +24,38 @@ export async function templatesRoot(): Promise<string> {
   throw new Error("Could not locate templates/ directory");
 }
 
+const REQUIRED_SKILLS = [
+  "optima",
+  "context-engineering",
+  "finops-zones",
+  "optima-debug",
+] as const;
+
+async function skillsDirComplete(dir: string): Promise<boolean> {
+  try {
+    await access(dir, constants.R_OK);
+    for (const skill of REQUIRED_SKILLS) {
+      await access(join(dir, skill, "SKILL.md"), constants.R_OK);
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function skillsRoot(): Promise<string> {
   const candidates = [
-    join(HERE, "../skills"),
-    join(HERE, "../../../skills"),
+    join(HERE, "../../../skills"), // monorepo root (preferred when complete)
+    join(HERE, "../skills"), // packages/cli/skills (packaged)
     join(HERE, "../../skills"),
     join(process.cwd(), "skills"),
   ];
   for (const c of candidates) {
-    try {
-      await access(c, constants.R_OK);
-      return c;
-    } catch {
-      // try next
-    }
+    if (await skillsDirComplete(c)) return c;
   }
-  throw new Error("Could not locate skills/ directory");
+  throw new Error(
+    `Could not locate a complete skills/ directory (need ${REQUIRED_SKILLS.join(", ")})`,
+  );
 }
 
 async function exists(path: string): Promise<boolean> {
@@ -140,7 +156,7 @@ export async function initProject(
     }
     try {
       const skills = await skillsRoot();
-      for (const skill of ["optima", "context-engineering", "finops-zones", "optima-debug"]) {
+      for (const skill of REQUIRED_SKILLS) {
         await ensureDir(join(projectDir, `.cursor/skills/${skill}`));
         await writeCopy(
           join(skills, `${skill}/SKILL.md`),
@@ -185,7 +201,7 @@ export async function initProject(
   if (expand.includes("claude")) {
     try {
       const skills = await skillsRoot();
-      for (const skill of ["optima", "context-engineering", "finops-zones", "optima-debug"]) {
+      for (const skill of REQUIRED_SKILLS) {
         await ensureDir(join(projectDir, `.claude/skills/${skill}`));
         await writeCopy(
           join(skills, `${skill}/SKILL.md`),
