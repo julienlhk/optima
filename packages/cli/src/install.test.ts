@@ -12,29 +12,29 @@ const workspaceTmp = join(
 describe("install helpers", () => {
   it("upserts marked blocks idempotently", async () => {
     await mkdir(workspaceTmp, { recursive: true });
-    const dir = await mkdtemp(join(workspaceTmp, "ai-opt-"));
+    const dir = await mkdtemp(join(workspaceTmp, "optima-"));
     const file = join(dir, "AGENTS.md");
     await upsertMarkedBlock(file, "one");
     await upsertMarkedBlock(file, "two");
     const text = await readFile(file, "utf8");
     expect(text).toContain("two");
     expect(text).not.toContain("one");
-    expect(text.match(/ai-opt:begin/g)?.length).toBe(1);
+    expect(text.match(/optima:begin/g)?.length).toBe(1);
     await rm(dir, { recursive: true, force: true });
   });
 
   it("inits a project with templates", async () => {
     await mkdir(workspaceTmp, { recursive: true });
-    const dir = await mkdtemp(join(workspaceTmp, "ai-opt-proj-"));
+    const dir = await mkdtemp(join(workspaceTmp, "optima-proj-"));
     const actions = await initProject(dir, ["all"]);
     expect(actions.length).toBeGreaterThan(3);
     const checks = await doctor(dir);
     const required = checks.filter((c) =>
-      ["AGENTS.md", "AI_OPT_RUNTIME.md", ".aioptignore"].includes(c.check),
+      ["AGENTS.md", "OPTIMA_RUNTIME.md", ".optimaignore"].includes(c.check),
     );
     expect(required.every((c) => c.ok)).toBe(true);
     const agents = await readFile(join(dir, "AGENTS.md"), "utf8");
-    expect(agents).toContain("ai-opt:begin");
+    expect(agents).toContain("optima:begin");
     await rm(dir, { recursive: true, force: true });
   });
 });

@@ -1,5 +1,5 @@
 {
-  "name": "@ai-opt/core",
+  "name": "@optima/core",
   "version": "1.0.0",
   "description": "Token estimation, budgets, cost tables, and shared types for AI optimization.",
   "license": "MIT",

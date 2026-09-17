@@ -1,4 +1,4 @@
-# AI Opt Runtime Spec — Zone & Diet Protocol v1.0
+# Optima Runtime Spec — Zone & Diet Protocol v1.0
 
 Canonical instruction contract for coding agents. Soft enforcement: hosts that honor workspace rules apply these behaviors.
 

@@ -1,5 +1,5 @@
 {
-  "name": "@ai-opt/analyze",
+  "name": "@optima/analyze",
   "version": "1.0.0",
   "description": "Cursor transcript forensics and session waste scoring.",
   "license": "MIT",
@@ -19,8 +19,8 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ai-opt/core": "workspace:*",
-    "@ai-opt/classify": "workspace:*"
+    "@optima/core": "workspace:*",
+    "@optima/classify": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

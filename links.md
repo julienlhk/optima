@@ -1,4 +1,6 @@
-# Keep links.md for user reference; sources listed in ATTRIBUTION.md
+# Research notes
+
+Internal reference links used while designing Optima (not dependencies):
 
 https://github.com/addyosmani/agent-skills
 https://github.com/Rezhnn/Token-Optimization

@@ -2,7 +2,7 @@
 trigger: always_on
 ---
 
-# AI Opt
+# Optima
 
 Token & agent FinOps policy for this project.
 

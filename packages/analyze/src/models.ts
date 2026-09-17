@@ -21,7 +21,7 @@ export interface AnalysisReport {
   sessionsAnalyzed: number;
   totalEstimatedTokens: number;
   wasteScore: number;
-  findings: import("@ai-opt/core").WasteFinding[];
+  findings: import("@optima/core").WasteFinding[];
   tailoredRules: string[];
   aggregateByCode: Record<string, number>;
 }

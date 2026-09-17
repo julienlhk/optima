@@ -1,4 +1,4 @@
-import type { OptimizationTechnique } from "@ai-opt/core";
+import type { OptimizationTechnique } from "@optima/core";
 
 export const TAXONOMY: OptimizationTechnique[] = [
   {

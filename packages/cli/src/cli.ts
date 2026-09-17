@@ -1,30 +1,30 @@
-import { estimateTokens, formatUsd, getModelPricing, computeCost } from "@ai-opt/core";
-import { classify, exportTaxonomyDocument } from "@ai-opt/classify";
-import { compressAuto } from "@ai-opt/compress";
-import { buildCacheableMessages, lintCachePrefix } from "@ai-opt/cache";
+import { estimateTokens, formatUsd, getModelPricing, computeCost } from "@optima/core";
+import { classify, exportTaxonomyDocument } from "@optima/classify";
+import { compressAuto } from "@optima/compress";
+import { buildCacheableMessages, lintCachePrefix } from "@optima/cache";
 import {
   analyzeSessions,
   discoverSessions,
   parseTranscriptJsonl,
   findingsToMdcSection,
-} from "@ai-opt/analyze";
+} from "@optima/analyze";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { doctor, initProject, resolveProject, type Host } from "./install.js";
 
 function printHelp(): void {
-  console.log(`ai-opt — AI & token optimization CLI
+  console.log(`optima — AI & token optimization CLI
 
 Usage:
-  ai-opt init [--host cursor|claude|codex|windsurf|all]
-  ai-opt install [--host ...]     (alias of init)
-  ai-opt doctor
-  ai-opt analyze [--days N] [--limit N] [--json] [--apply-rules]
-  ai-opt classify <file|->
-  ai-opt estimate --file <path> [--model id]
-  ai-opt bench
-  ai-opt taxonomy
-  ai-opt help
+  optima init [--host cursor|claude|codex|windsurf|all]
+  optima install [--host ...]     (alias of init)
+  optima doctor
+  optima analyze [--days N] [--limit N] [--json] [--apply-rules]
+  optima classify <file|->
+  optima estimate --file <path> [--model id]
+  optima bench
+  optima taxonomy
+  optima help
 `);
 }
 
@@ -66,7 +66,7 @@ export async function run(argv = process.argv): Promise<number> {
     case "install": {
       const host = String(flags.host ?? "all") as Host;
       const actions = await initProject(project, [host]);
-      console.log(`Initialized AI Opt in ${project}`);
+      console.log(`Initialized Optima in ${project}`);
       for (const a of actions) console.log(`  • ${a}`);
       return 0;
     }
@@ -101,11 +101,11 @@ export async function run(argv = process.argv): Promise<number> {
       }
       if (flags["apply-rules"] && report.tailoredRules.length) {
         const section = findingsToMdcSection(report.tailoredRules);
-        const dest = join(project, ".cursor/rules/ai-opt-tailored.mdc");
+        const dest = join(project, ".cursor/rules/optima-tailored.mdc");
         await mkdir(join(project, ".cursor/rules"), { recursive: true });
         await writeFile(
           dest,
-          `---\ndescription: AI Opt tailored rules from transcript analysis\nalwaysApply: true\n---\n\n${section}`,
+          `---\ndescription: Optima tailored rules from transcript analysis\nalwaysApply: true\n---\n\n${section}`,
           "utf8",
         );
         console.log(`Wrote ${dest}`);
@@ -129,7 +129,7 @@ export async function run(argv = process.argv): Promise<number> {
     case "estimate": {
       const file = String(flags.file ?? "");
       if (!file) {
-        console.error("Usage: ai-opt estimate --file <path> [--model id]");
+        console.error("Usage: optima estimate --file <path> [--model id]");
         return 1;
       }
       const text = await readFile(file, "utf8");

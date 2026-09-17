@@ -1,4 +1,4 @@
-import { estimateTokens } from "@ai-opt/core";
+import { estimateTokens } from "@optima/core";
 
 export type CacheControl = { type: "ephemeral"; ttl?: "5m" | "1h" };
 

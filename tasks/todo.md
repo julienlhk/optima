@@ -1,20 +1,20 @@
-# AI Opt — Implementation Checklist
+# Optima — Implementation Checklist
 
 ## Scaffold
 - [x] Root monorepo (pnpm, TS, Vitest, MIT)
 - [x] Package stubs for core, classify, compress, cache, analyze, cli
 
 ## Core + Classify
-- [x] `@ai-opt/core` — tokens, budgets, cost tables, types
-- [x] `@ai-opt/classify` — taxonomy + classifier + JSON Schema
+- [x] `@optima/core` — tokens, budgets, cost tables, types
+- [x] `@optima/classify` — taxonomy + classifier + JSON Schema
 
 ## Compress + Cache
-- [x] `@ai-opt/compress` — deterministic compressors
-- [x] `@ai-opt/cache` — cache-aware prompt builders + lint
+- [x] `@optima/compress` — deterministic compressors
+- [x] `@optima/cache` — cache-aware prompt builders + lint
 
 ## Analyze + CLI
-- [x] `@ai-opt/analyze` — Cursor transcript waste scoring
-- [x] `@ai-opt/cli` — init / install / doctor / analyze / classify / bench / estimate
+- [x] `@optima/analyze` — Cursor transcript waste scoring
+- [x] `@optima/cli` — init / install / doctor / analyze / classify / bench / estimate
 
 ## Skills + Templates
 - [x] Skills (context, finops-zones, diet levels)
@@ -29,4 +29,4 @@
 
 ## Review
 
-Delivered an MIT TypeScript monorepo with six packages, multi-host skills/templates, taxonomy (20 techniques / 7 layers), enterprise docs, and CI. Verified: `pnpm build`, `pnpm test` (24/24), `pnpm typecheck`, `ai-opt init/doctor/bench/estimate/classify/parse-fixture`.
+Delivered an MIT TypeScript monorepo with six packages, multi-host skills/templates, taxonomy (20 techniques / 7 layers), enterprise docs, and CI. Verified: `pnpm build`, `pnpm test` (24/24), `pnpm typecheck`, `optima init/doctor/bench/estimate/classify/parse-fixture`.

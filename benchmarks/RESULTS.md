@@ -5,7 +5,7 @@ Honest micro-benches — **not** marketing savings claims.
 ## Compress fixture
 
 ```bash
-pnpm ai-opt bench
+pnpm optima bench
 ```
 
 Expect `compressRatio < 1` for homogeneous JSON arrays and suppressed passing test lines.
@@ -13,7 +13,7 @@ Expect `compressRatio < 1` for homogeneous JSON arrays and suppressed passing te
 ## Transcript waste fixture
 
 ```bash
-pnpm ai-opt parse-fixture benchmarks/fixtures/wasteful-session.jsonl
+pnpm optima parse-fixture benchmarks/fixtures/wasteful-session.jsonl
 ```
 
 Expect codes: `broad_glob`, `noisy_reads`, `vague_prompt`, `retry_loop`.

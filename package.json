@@ -1,22 +1,55 @@
 {
-  "name": "ai-opt",
+  "name": "optima",
   "version": "1.0.0",
-  "private": true,
-  "description": "Production AI agent & token optimization monorepo — metering, classification, compression, cache builders, analyzers, and agent skills.",
+  "description": "Optima — installable AI agent & token optimization for any repo. Skills, rules, meters, compressors, cache builders.",
   "license": "MIT",
+  "type": "module",
+  "bin": {
+    "optima": "./bin/optima.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julienlhk/optima.git"
+  },
+  "homepage": "https://github.com/julienlhk/optima",
+  "bugs": {
+    "url": "https://github.com/julienlhk/optima/issues"
+  },
+  "keywords": [
+    "ai",
+    "tokens",
+    "optimization",
+    "finops",
+    "cursor",
+    "claude",
+    "codex",
+    "agents",
+    "prompt-caching",
+    "context-engineering"
+  ],
   "packageManager": "pnpm@10.22.0",
   "engines": {
     "node": ">=20"
   },
+  "files": [
+    "bin",
+    "skills",
+    "templates",
+    "packages/cli/dist",
+    "packages/*/dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "pnpm -r --filter './packages/*' run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "pnpm -r --filter './packages/*' run typecheck",
     "lint": "pnpm -r --filter './packages/*' run typecheck",
-    "ai-opt": "node packages/cli/dist/bin.js",
-    "bench": "pnpm --filter @ai-opt/cli exec node dist/bin.js bench",
-    "clean": "pnpm -r --filter './packages/*' run clean"
+    "optima": "node bin/optima.mjs",
+    "bench": "pnpm --filter @optima/cli exec node dist/bin.js bench",
+    "clean": "pnpm -r --filter './packages/*' run clean",
+    "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",

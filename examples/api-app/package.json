@@ -1,5 +1,5 @@
 {
-  "name": "@ai-opt/example-api",
+  "name": "@optima/example-api",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -8,9 +8,9 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@ai-opt/cache": "workspace:*",
-    "@ai-opt/core": "workspace:*",
-    "@ai-opt/compress": "workspace:*"
+    "@optima/cache": "workspace:*",
+    "@optima/core": "workspace:*",
+    "@optima/compress": "workspace:*"
   },
   "devDependencies": {
     "tsx": "^4.19.4"

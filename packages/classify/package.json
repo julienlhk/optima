@@ -1,5 +1,5 @@
 {
-  "name": "@ai-opt/classify",
+  "name": "@optima/classify",
   "version": "1.0.0",
   "description": "AI optimization taxonomy and session/prompt classifiers.",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ai-opt/core": "workspace:*"
+    "@optima/core": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

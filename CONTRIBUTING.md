@@ -5,7 +5,7 @@
 3. Test: `pnpm test`
 4. Typecheck: `pnpm typecheck`
 5. Keep changes MIT-clean (no Noncommercial vendoring)
-6. Map new techniques into `@ai-opt/classify` taxonomy
+6. Map new techniques into `@optima/classify` taxonomy
 7. Prefer honest benches over marketing numbers
 
 ## Package layout

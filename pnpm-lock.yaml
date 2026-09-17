@@ -23,13 +23,13 @@ importers:
 
   examples/api-app:
     dependencies:
-      '@ai-opt/cache':
+      '@optima/cache':
         specifier: workspace:*
         version: link:../../packages/cache
-      '@ai-opt/compress':
+      '@optima/compress':
         specifier: workspace:*
         version: link:../../packages/compress
-      '@ai-opt/core':
+      '@optima/core':
         specifier: workspace:*
         version: link:../../packages/core
     devDependencies:
@@ -39,46 +39,46 @@ importers:
 
   packages/analyze:
     dependencies:
-      '@ai-opt/classify':
+      '@optima/classify':
         specifier: workspace:*
         version: link:../classify
-      '@ai-opt/core':
+      '@optima/core':
         specifier: workspace:*
         version: link:../core
 
   packages/cache:
     dependencies:
-      '@ai-opt/core':
+      '@optima/core':
         specifier: workspace:*
         version: link:../core
 
   packages/classify:
     dependencies:
-      '@ai-opt/core':
+      '@optima/core':
         specifier: workspace:*
         version: link:../core
 
   packages/cli:
     dependencies:
-      '@ai-opt/analyze':
+      '@optima/analyze':
         specifier: workspace:*
         version: link:../analyze
-      '@ai-opt/cache':
+      '@optima/cache':
         specifier: workspace:*
         version: link:../cache
-      '@ai-opt/classify':
+      '@optima/classify':
         specifier: workspace:*
         version: link:../classify
-      '@ai-opt/compress':
+      '@optima/compress':
         specifier: workspace:*
         version: link:../compress
-      '@ai-opt/core':
+      '@optima/core':
         specifier: workspace:*
         version: link:../core
 
   packages/compress:
     dependencies:
-      '@ai-opt/core':
+      '@optima/core':
         specifier: workspace:*
         version: link:../core
 

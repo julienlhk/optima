@@ -60,8 +60,8 @@ async function writeCopy(src: string, dest: string): Promise<void> {
   await writeFile(dest, data);
 }
 
-const BEGIN = "<!-- ai-opt:begin -->";
-const END = "<!-- ai-opt:end -->";
+const BEGIN = "<!-- optima:begin -->";
+const END = "<!-- optima:end -->";
 
 export async function upsertMarkedBlock(
   filePath: string,
@@ -105,7 +105,7 @@ export async function initProject(
     ".claudeignore",
     ".codexignore",
     ".geminiignore",
-    ".aioptignore",
+    ".optimaignore",
   ];
   for (const name of ignoreNames) {
     const dest = join(projectDir, name);
@@ -126,14 +126,32 @@ export async function initProject(
     try {
       await ensureDir(join(projectDir, ".cursor/rules"));
       await writeCopy(
-        join(root, "cursor/ai-opt.mdc"),
-        join(projectDir, ".cursor/rules/ai-opt.mdc"),
+        join(root, "cursor/optima.mdc"),
+        join(projectDir, ".cursor/rules/optima.mdc"),
       );
-      actions.push("wrote .cursor/rules/ai-opt.mdc");
+      actions.push("wrote .cursor/rules/optima.mdc");
     } catch (err) {
       const code = (err as NodeJS.ErrnoException).code;
       if (code === "EPERM" || code === "EACCES") {
         actions.push("skipped .cursor/rules (environment blocked)");
+      } else {
+        throw err;
+      }
+    }
+    try {
+      const skills = await skillsRoot();
+      for (const skill of ["optima", "context-engineering", "finops-zones"]) {
+        await ensureDir(join(projectDir, `.cursor/skills/${skill}`));
+        await writeCopy(
+          join(skills, `${skill}/SKILL.md`),
+          join(projectDir, `.cursor/skills/${skill}/SKILL.md`),
+        );
+        actions.push(`wrote .cursor/skills/${skill}/SKILL.md`);
+      }
+    } catch (err) {
+      const code = (err as NodeJS.ErrnoException).code;
+      if (code === "EPERM" || code === "EACCES") {
+        actions.push("skipped .cursor/skills (environment blocked)");
       } else {
         throw err;
       }
@@ -144,10 +162,10 @@ export async function initProject(
     try {
       await ensureDir(join(projectDir, ".windsurf/rules"));
       await writeCopy(
-        join(root, "windsurf/ai-opt.md"),
-        join(projectDir, ".windsurf/rules/ai-opt.md"),
+        join(root, "windsurf/optima.md"),
+        join(projectDir, ".windsurf/rules/optima.md"),
       );
-      actions.push("wrote .windsurf/rules/ai-opt.md");
+      actions.push("wrote .windsurf/rules/optima.md");
     } catch (err) {
       const code = (err as NodeJS.ErrnoException).code;
       if (code === "EPERM" || code === "EACCES") {
@@ -166,13 +184,15 @@ export async function initProject(
 
   if (expand.includes("claude")) {
     try {
-      await ensureDir(join(projectDir, ".claude/skills/ai-opt"));
       const skills = await skillsRoot();
-      await writeCopy(
-        join(skills, "ai-opt/SKILL.md"),
-        join(projectDir, ".claude/skills/ai-opt/SKILL.md"),
-      );
-      actions.push("wrote .claude/skills/ai-opt/SKILL.md");
+      for (const skill of ["optima", "context-engineering", "finops-zones"]) {
+        await ensureDir(join(projectDir, `.claude/skills/${skill}`));
+        await writeCopy(
+          join(skills, `${skill}/SKILL.md`),
+          join(projectDir, `.claude/skills/${skill}/SKILL.md`),
+        );
+        actions.push(`wrote .claude/skills/${skill}/SKILL.md`);
+      }
     } catch (err) {
       const code = (err as NodeJS.ErrnoException).code;
       if (code === "EPERM" || code === "EACCES") {
@@ -188,9 +208,9 @@ export async function initProject(
 
   await writeCopy(
     join(root, "HYBRID_RUNTIME_SPEC.md"),
-    join(projectDir, "AI_OPT_RUNTIME.md"),
+    join(projectDir, "OPTIMA_RUNTIME.md"),
   );
-  actions.push("wrote AI_OPT_RUNTIME.md");
+  actions.push("wrote OPTIMA_RUNTIME.md");
 
   return actions;
 }
@@ -199,14 +219,18 @@ export async function doctor(projectDir: string): Promise<
   { check: string; ok: boolean; detail: string }[]
 > {
   const checks: { check: string; ok: boolean; detail: string }[] = [];
-  const required = ["AGENTS.md", "AI_OPT_RUNTIME.md", ".aioptignore"];
-  const optional = [".cursor/rules/ai-opt.mdc", ".cursorignore"];
+  const required = ["AGENTS.md", "OPTIMA_RUNTIME.md", ".optimaignore"];
+  const optional = [
+    ".cursor/rules/optima.mdc",
+    ".cursor/skills/optima/SKILL.md",
+    ".cursorignore",
+  ];
   for (const p of required) {
     const ok = await exists(join(projectDir, p));
     checks.push({
       check: p,
       ok,
-      detail: ok ? "present" : "missing — run `ai-opt init`",
+      detail: ok ? "present" : "missing — run `optima init`",
     });
   }
   for (const p of optional) {

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ai-opt.dev/schemas/taxonomy.schema.json",
-  "title": "AI Opt Optimization Taxonomy",
+  "$id": "https://optima.dev/schemas/taxonomy.schema.json",
+  "title": "Optima Optimization Taxonomy",
   "type": "object",
   "required": ["version", "techniques"],
   "properties": {

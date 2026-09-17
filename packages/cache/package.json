@@ -1,5 +1,5 @@
 {
-  "name": "@ai-opt/cache",
+  "name": "@optima/cache",
   "version": "1.0.0",
   "description": "Cache-aware prompt builders and cache-busting linters.",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ai-opt/core": "workspace:*"
+    "@optima/core": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

@@ -1,37 +1,45 @@
 ---
-name: ai-opt
-description: Token and agent FinOps — diet levels, zone routing, context hygiene, cache-aware API guidance. Use when optimizing tokens, costs, agent verbosity, or context packing.
+name: optima
+description: Token and agent FinOps for this repo — diet levels, zone routing, context hygiene, cache-aware API guidance. Use when optimizing tokens, costs, agent verbosity, or context packing. Install via npx optima init or npx skills add julienlhk/optima.
 ---
 
-# AI Opt Skill
+# Optima
 
 ## Overview
 
-Apply production AI/token optimization without sacrificing correctness.
+Optima is the optimization layer for AI coding agents in this repository. Cut avoidable tokens without sacrificing correctness.
 
 ## When to use
 
 - User asks to save tokens, reduce cost, or stop verbose agent output
 - Long sessions approaching context limits
-- Setting up Cursor/Claude/Codex FinOps rules
+- Setting up Cursor / Claude / Codex FinOps rules
 - Designing API prompts for prompt caching
+
+## Install (for humans)
+
+```bash
+npx --yes github:julienlhk/optima init --host all
+# or
+npx skills add julienlhk/optima
+```
 
 ## Levels
 
-`/ai-opt off|lite|on|ultra`
+`/optima off|lite|on|ultra` (or ask to set diet level)
 
 - **off** — no diet
 - **lite** — compress chat only
-- **on** — default FinOps (answer-first + surgical context)
+- **on** — default (answer-first + surgical context)
 - **ultra** — telegraphic chat; never telegraph code/docs/tests/IDs
 
 ## Process
 
 1. Confirm diet level and zone (sacred wins for code/docs).
 2. Prefer grep → targeted read → batch tools.
-3. Respect ignore boundaries.
-4. For API work: stable prefix, cache breakpoints, lint for timestamps.
-5. Recommend taxonomy techniques from `@ai-opt/classify` when coaching.
+3. Respect ignore boundaries (`.cursorignore`, `.optimaignore`, …).
+4. For API work: stable prefix, cache breakpoints, no timestamps in cached prefixes.
+5. At ~60–75% context, compact or hand off to a fresh session.
 
 ## Buckets
 
@@ -44,6 +52,10 @@ Apply production AI/token optimization without sacrificing correctness.
 | E Context | Grep-before-read, line ranges, min turns |
 | F Tools | Batch, stop early |
 | G Sub-agents | Cheap bounded search; strong model verifies |
+
+## Zones
+
+0 Sacred · 1 Premium · 2 Hybrid · 3 Ops — see `OPTIMA_RUNTIME.md`.
 
 ## Rationalizations to reject
 

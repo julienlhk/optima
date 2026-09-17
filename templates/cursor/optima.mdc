@@ -1,11 +1,11 @@
 ---
-description: AI Opt — token & agent FinOps rules (diet levels + zone routing + context hygiene)
+description: Optima — token & agent FinOps rules (diet levels + zone routing + context hygiene)
 alwaysApply: true
 ---
 
-# AI Opt
+# Optima
 
-Follow AI Opt for token and agent efficiency without sacrificing correctness.
+Follow Optima for token and agent efficiency without sacrificing correctness.
 
 ## Quality floor (never break)
 - Code, docs, comments, identifiers, errors, and security-critical tests stay precise.

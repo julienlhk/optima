@@ -1,7 +1,7 @@
-import type { WasteFinding } from "@ai-opt/core";
+import type { WasteFinding } from "@optima/core";
 import type { Session } from "./models.js";
 import type { AnalysisReport } from "./models.js";
-import { classify } from "@ai-opt/classify";
+import { classify } from "@optima/classify";
 
 const NOISE_PATHS =
   /node_modules|\.git\/|\/dist\/|\/build\/|\.venv|__pycache__|package-lock\.json|pnpm-lock\.yaml|yarn\.lock/i;

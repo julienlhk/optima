@@ -1,16 +1,16 @@
-# Adopting AI Opt
+# Adopting Optima
 
 ## Greenfield
 
-1. `pnpm ai-opt init --host all` in the new repo
+1. `pnpm optima init --host all` in the new repo
 2. Commit generated ignores + rules
-3. Import `@ai-opt/core` / `@ai-opt/cache` in any API that calls LLMs
-4. Add CI: `ai-opt doctor` + taxonomy validate
+3. Import `@optima/core` / `@optima/cache` in any API that calls LLMs
+4. Add CI: `optima doctor` + taxonomy validate
 
 ## Brownfield
 
 1. Start with **ignore boundaries** + Cursor rule only (`--host cursor`)
-2. Run `ai-opt analyze --apply-rules` on existing Cursor transcripts
+2. Run `optima analyze --apply-rules` on existing Cursor transcripts
 3. Introduce diet `on` before `ultra`
 4. Wire `TokenMeter` around production LLM calls last
 
@@ -18,10 +18,10 @@
 
 | Host | Artifact |
 |------|----------|
-| Cursor | `.cursor/rules/ai-opt.mdc`, `.cursorignore` |
-| Claude Code | `.claude/skills/ai-opt`, `CLAUDE.md`, `.claudeignore` |
+| Cursor | `.cursor/rules/optima.mdc`, `.cursorignore` |
+| Claude Code | `.claude/skills/optima`, `CLAUDE.md`, `.claudeignore` |
 | Codex | `AGENTS.md`, `.codexignore` |
-| Windsurf | `.windsurf/rules/ai-opt.md` |
+| Windsurf | `.windsurf/rules/optima.md` |
 
 ## Rollout risks
 

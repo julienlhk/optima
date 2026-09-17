@@ -1,6 +1,6 @@
-# AI Opt (project policy)
+# Optima (project policy)
 
-Apply AI Opt token/agent optimization for this repository.
+Apply Optima token/agent optimization for this repository.
 
 ## Rules
 - **Sacred floor:** code, docs, critical tests — never telegraph or skip safety.
@@ -10,4 +10,4 @@ Apply AI Opt token/agent optimization for this repository.
 - **Cache (API apps):** stable system/tools prefix; no timestamps in cached prefixes.
 - **Compaction:** restart or summarize near 60–75% context utilization.
 
-See `AI_OPT_RUNTIME.md` for the full zone decision tree.
+See `OPTIMA_RUNTIME.md` for the full zone decision tree.

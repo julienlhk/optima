@@ -1,4 +1,4 @@
-# ADR-001: Clean-room MIT monorepo (no upstream vendoring)
+# ADR-001: MIT monorepo, skills-first distribution
 
 ## Status
 
@@ -6,12 +6,14 @@ Accepted
 
 ## Context
 
-Source inspiration repos include PolyForm Noncommercial and unlicensed material. Enterprise adopters need clear redistribution rights.
+Teams need a single install path for agent FinOps that feels like adding a package, plus libraries for app-level metering.
 
 ## Decision
 
-Implement original TypeScript packages under MIT. Credit inspirations in ATTRIBUTION.md. Do not vendor restricted code.
+Ship Optima under MIT as:
+1. Installable skills/rules via `npx optima init` / `npx skills add julienlhk/optima`
+2. Scoped libraries `@optima/*` for runtime optimization
 
 ## Consequences
 
-Hook-interceptor depth of Noncommercial tools is out of v1 scope; soft policy + libraries ship first.
+Soft policy depends on agent compliance; hard guarantees use `TokenMeter` and compressors in app code.

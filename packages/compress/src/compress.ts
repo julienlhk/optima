@@ -121,7 +121,7 @@ export function compressTestOutput(text: string): CompressResult {
     }
     if (/error|fail|warn/i.test(line)) kept.push(line);
   }
-  if (passes > 0) kept.unshift(`[ai-opt] suppressed ${passes} passing assertion lines`);
+  if (passes > 0) kept.unshift(`[optima] suppressed ${passes} passing assertion lines`);
   const compressed = kept.join("\n").trim() || text.slice(0, 2000);
   return result(text, compressed, "test-filter");
 }

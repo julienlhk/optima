@@ -2,9 +2,9 @@
  * Minimal example: meter usage + cache-aware message build + compress tool output.
  * Does not call a real LLM provider.
  */
-import { TokenMeter, formatUsd } from "@ai-opt/core";
-import { buildCacheableMessages, lintCachePrefix } from "@ai-opt/cache";
-import { compressAuto } from "@ai-opt/compress";
+import { TokenMeter, formatUsd } from "@optima/core";
+import { buildCacheableMessages, lintCachePrefix } from "@optima/cache";
+import { compressAuto } from "@optima/compress";
 
 const system = [
   "You are a production support agent.",

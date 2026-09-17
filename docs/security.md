@@ -10,7 +10,7 @@
 
 | Risk | Mitigation |
 |------|------------|
-| Supply chain | Prefer `pnpm ai-opt` from this repo / pinned npm publish; avoid opaque curl\|bash as sole path |
+| Supply chain | Prefer `pnpm optima` from this repo / pinned npm publish; avoid opaque curl\|bash as sole path |
 | Secret leakage into meters | Do not log raw prompts in production meters; log token counts/costs only |
 | Over-compression | Sacred-path helpers; test filters keep FAIL/trace lines |
 

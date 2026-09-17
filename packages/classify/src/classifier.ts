@@ -1,4 +1,4 @@
-import type { OptimizationTechnique, WasteFinding } from "@ai-opt/core";
+import type { OptimizationTechnique, WasteFinding } from "@optima/core";
 import { TAXONOMY, getTechnique } from "./taxonomy.js";
 
 export interface ClassifyInput {

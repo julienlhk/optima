@@ -1,9 +1,9 @@
 ---
-name: ai-opt
+name: optima
 description: Token and agent FinOps — diet levels, zone routing, context hygiene, cache-aware API guidance. Use when optimizing tokens, costs, agent verbosity, or context packing.
 ---
 
-# AI Opt Skill
+# Optima Skill
 
 ## Overview
 
@@ -18,7 +18,7 @@ Apply production AI/token optimization without sacrificing correctness.
 
 ## Levels
 
-`/ai-opt off|lite|on|ultra`
+`/optima off|lite|on|ultra`
 
 - **off** — no diet
 - **lite** — compress chat only
@@ -31,7 +31,7 @@ Apply production AI/token optimization without sacrificing correctness.
 2. Prefer grep → targeted read → batch tools.
 3. Respect ignore boundaries.
 4. For API work: stable prefix, cache breakpoints, lint for timestamps.
-5. Recommend taxonomy techniques from `@ai-opt/classify` when coaching.
+5. Recommend taxonomy techniques from `@optima/classify` when coaching.
 
 ## Buckets
 

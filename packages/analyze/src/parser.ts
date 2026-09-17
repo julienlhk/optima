@@ -1,4 +1,4 @@
-import { estimateTokens } from "@ai-opt/core";
+import { estimateTokens } from "@optima/core";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { homedir } from "node:os";

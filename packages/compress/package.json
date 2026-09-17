@@ -1,5 +1,5 @@
 {
-  "name": "@ai-opt/compress",
+  "name": "@optima/compress",
   "version": "1.0.0",
   "description": "Deterministic, signal-preserving compressors for tool and JSON outputs.",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@ai-opt/core": "workspace:*"
+    "@optima/core": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

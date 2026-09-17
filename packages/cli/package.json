@@ -1,11 +1,11 @@
 {
-  "name": "@ai-opt/cli",
+  "name": "@optima/cli",
   "version": "1.0.0",
-  "description": "AI Opt CLI — init, install, doctor, analyze, classify, bench, estimate.",
+  "description": "Optima CLI — init, install, doctor, analyze, classify, bench, estimate.",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "ai-opt": "./dist/bin.js"
+    "optima": "./dist/bin.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -22,11 +22,11 @@
     "clean": "rm -rf dist templates skills"
   },
   "dependencies": {
-    "@ai-opt/analyze": "workspace:*",
-    "@ai-opt/cache": "workspace:*",
-    "@ai-opt/classify": "workspace:*",
-    "@ai-opt/compress": "workspace:*",
-    "@ai-opt/core": "workspace:*"
+    "@optima/analyze": "workspace:*",
+    "@optima/cache": "workspace:*",
+    "@optima/classify": "workspace:*",
+    "@optima/compress": "workspace:*",
+    "@optima/core": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

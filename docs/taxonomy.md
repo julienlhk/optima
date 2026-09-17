@@ -3,7 +3,7 @@
 Seven layers of AI/token optimization. Machine-readable export:
 
 ```bash
-pnpm ai-opt taxonomy
+pnpm optima taxonomy
 ```
 
 JSON Schema: `packages/classify/src/taxonomy.schema.json`
@@ -27,7 +27,7 @@ Each technique includes: `id`, `name`, `layer`, `effort`, `risk`, `evidence`, `s
 ## Classifier
 
 ```ts
-import { classify } from "@ai-opt/classify";
+import { classify } from "@optima/classify";
 
 const result = classify({
   text: "enable cache_control and reduce git verbosity",
@@ -36,4 +36,4 @@ const result = classify({
 // result.playbook — ordered coaching lines
 ```
 
-See full catalog in `@ai-opt/classify` source (`TAXONOMY`).
+See full catalog in `@optima/classify` source (`TAXONOMY`).

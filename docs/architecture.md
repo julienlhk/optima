@@ -10,14 +10,14 @@ flowchart TB
     Codex[Codex]
   end
 
-  subgraph aiopt [AI_Opt]
+  subgraph optimaStack [Optima]
     Skills[skills_and_templates]
-    CLI["@ai-opt/cli"]
-    Analyze["@ai-opt/analyze"]
-    Core["@ai-opt/core"]
-    Classify["@ai-opt/classify"]
-    Compress["@ai-opt/compress"]
-    Cache["@ai-opt/cache"]
+    CLI["@optima/cli"]
+    Analyze["@optima/analyze"]
+    Core["@optima/core"]
+    Classify["@optima/classify"]
+    Compress["@optima/compress"]
+    Cache["@optima/cache"]
   end
 
   Apps[Node_APIs]
@@ -43,12 +43,12 @@ sequenceDiagram
   participant Dev
   participant CLI as ai_opt_cli
   participant FS as Project_FS
-  Dev->>CLI: ai-opt init --host all
+  Dev->>CLI: optima init --host all
   CLI->>FS: write ignore templates
-  CLI->>FS: write .cursor/rules/ai-opt.mdc
+  CLI->>FS: write .cursor/rules/optima.mdc
   CLI->>FS: upsert AGENTS.md / CLAUDE.md
-  CLI->>FS: copy skills + AI_OPT_RUNTIME.md
-  Dev->>CLI: ai-opt doctor
+  CLI->>FS: copy skills + OPTIMA_RUNTIME.md
+  Dev->>CLI: optima doctor
   CLI->>FS: verify presence
 ```
 
