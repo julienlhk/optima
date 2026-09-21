@@ -5,8 +5,8 @@
   "license": "MIT",
   "type": "module",
   "bin": {
-    "optima": "./bin/optima",
-    "optima-ai": "./bin/optima-ai"
+    "optima": "./bin/optima.js",
+    "optima-ai": "./bin/optima.js"
   },
   "main": "./bin/optima.js",
   "repository": {
