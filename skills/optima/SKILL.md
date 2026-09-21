@@ -35,10 +35,11 @@ npx optima init
 ## Process
 
 1. Confirm diet level and zone (sacred wins for code/docs).
-2. Prefer grep → targeted read → batch tools.
-3. Respect ignore boundaries (`.cursorignore`, `.optimaignore`, …).
-4. For API work: stable prefix, cache breakpoints, no timestamps in cached prefixes.
-5. At ~60–75% context, compact or hand off to a fresh session.
+2. Prefer **search/index → span read** over dumping files or blind truncation (`npx optima retrieve --query …`).
+3. Compress **tool logs** (tests/git/json noise) — not sacred source.
+4. Respect ignore boundaries (`.cursorignore`, `.optimaignore`, …).
+5. For API work: stable prefix, cache breakpoints, no timestamps in cached prefixes.
+6. At ~60–75% context, compact or hand off to a fresh session.
 
 ## Buckets
 
@@ -48,7 +49,7 @@ npx optima init
 | B Docs/plans | Dense |
 | C Tests | Key + edge; never skip money/auth/data-loss |
 | D Code | YAGNI, idiomatic — not cryptic |
-| E Context | Grep-before-read, line ranges, min turns |
+| E Context | Search → span read (not blind trim); min turns |
 | F Tools | Batch, stop early |
 | G Sub-agents | Cheap bounded search; strong model verifies |
 

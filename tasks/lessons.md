@@ -9,3 +9,4 @@
 - Ship a structured debug protocol (hypothesize → rank → log → fix) as skill + `optima debug`; keep privacy claims explicit and accurate (local-only, no telemetry).
 - CI must track bin path renames (`optima.js`, not stale `.mjs`).
 - `packages/cli/skills` can go stale — `skillsRoot()` must require all SKILL.md files (including new skills), not just that the directory exists.
+- Prefer **retrieve/index → spans** for source understanding; use **compress** for tool-log noise; never treat blind truncation as “same context.”

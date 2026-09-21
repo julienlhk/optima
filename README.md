@@ -243,6 +243,10 @@ npx optima doctor
 npx optima debug
 npx optima bench
 npx optima estimate --file README.md --model claude-sonnet-4
+npx optima compare demo
+npx optima compare context --file README.md --lines 80
+npx optima compare retrieve --query optima --file README.md
+npx optima retrieve --query TokenMeter --root packages
 ```
 
 | Command | What it does |
@@ -252,8 +256,10 @@ npx optima estimate --file README.md --model claude-sonnet-4
 | `npx optima doctor` | Verify install |
 | `npx optima debug` | Structured debug probe + worksheet (`--problem` / `--write`) |
 | `npx optima analyze` | Score Cursor transcripts |
+| `npx optima retrieve --query X` | Search → read spans (better than dumping files) |
 | `npx optima classify <file>` | Recommend techniques |
 | `npx optima estimate --file X` | Token + USD estimate |
+| `npx optima compare …` | Without vs with Optima (compress / cache / context / retrieve / session / demo) |
 | `npx optima bench` | Micro-bench |
 | `npx optima taxonomy` | Technique catalog |
 | `npx optima help` | Help |
@@ -318,6 +324,7 @@ const slim = compressAuto(hugeTestLog, "test");
 | Layer | Problem | Optima change |
 |-------|---------|---------------|
 | **Input** | Repo dumps, lockfiles | Ignores + surgical reads |
+| **Retrieve** | Blind trim loses meaning | Search → ranked spans (`optima retrieve`) |
 | **Output** | Chatty git/npm replies | Diet + zones |
 | **Cache** | Resending the same system prompt | Stable prefix + breakpoints |
 | **Tools** | Huge logs re-ingested | `compressAuto` |
@@ -353,6 +360,7 @@ When developing against the Optima repo locally:
 | `@optima/core` | Tokens, budgets, cost tables |
 | `@optima/classify` | Technique playbooks |
 | `@optima/compress` | JSON / test / git compressors |
+| `@optima/retrieve` | Local search → span context (index better) |
 | `@optima/cache` | Cache-aware prompts + lint |
 | `@optima/analyze` | Cursor transcript waste → rules |
 

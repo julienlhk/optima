@@ -37,11 +37,21 @@ Usage:
   npx optima doctor
   npx optima debug [--problem "..."] [--write] [--json]
   npx optima analyze [--days N] [--limit N] [--json] [--apply-rules]
+  npx optima retrieve --query <text> [--root dir] [--file path]
   npx optima classify <file|->
   npx optima estimate --file <path> [--model id]
+  npx optima compare <compress|cache|context|retrieve|session|demo> [options]
   npx optima bench
   npx optima taxonomy
   npx optima help
+
+Compare:
+  npx optima compare demo
+  npx optima compare compress --file ./log.txt --kind test
+  npx optima compare cache --file ./system.txt --turns 100
+  npx optima compare context --file ./big.txt --lines 120
+  npx optima compare retrieve --query authenticate [--file path | --root dir]
+  npx optima compare session --file ./transcript.jsonl
 
 Env:
   OPTIMA_SKIP_POSTINSTALL=1   skip auto-wiring on npm install
@@ -111,8 +121,10 @@ if (cmd === "debug") {
 
 const advanced = new Set([
   "analyze",
+  "retrieve",
   "classify",
   "estimate",
+  "compare",
   "bench",
   "taxonomy",
   "parse-fixture",

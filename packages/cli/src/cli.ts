@@ -8,9 +8,20 @@ import {
   parseTranscriptJsonl,
   findingsToMdcSection,
 } from "@optima/analyze";
+import { retrieve, retrieveInText } from "@optima/retrieve";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { doctor, initProject, resolveProject, type Host } from "./install.js";
+import {
+  compareCache,
+  compareCompress,
+  compareContext,
+  compareDemo,
+  compareRetrieve,
+  compareSession,
+  formatCompareResult,
+  formatCompareResults,
+} from "./compare.js";
 
 function printHelp(): void {
   console.log(`optima — AI & token optimization CLI
@@ -20,11 +31,21 @@ Usage:
   optima install [--host ...]     (alias of init)
   optima doctor
   optima analyze [--days N] [--limit N] [--json] [--apply-rules]
+  optima retrieve --query <text> [--root dir] [--file path] [--context-lines N] [--json]
   optima classify <file|->
   optima estimate --file <path> [--model id]
+  optima compare <compress|cache|context|retrieve|session|demo> [options]
   optima bench
   optima taxonomy
   optima help
+
+Compare examples:
+  optima compare demo
+  optima compare compress --file ./log.txt --kind test
+  optima compare cache --file ./system.txt --turns 100
+  optima compare context --file ./big.txt --lines 120
+  optima compare retrieve --query authenticate [--file path | --root dir]
+  optima compare session --file ./transcript.jsonl
 `);
 }
 
@@ -113,6 +134,55 @@ export async function run(argv = process.argv): Promise<number> {
       return 0;
     }
 
+    case "retrieve": {
+      const query = String(flags.query ?? "");
+      if (!query) {
+        console.error(
+          "Usage: optima retrieve --query <text> [--root dir] [--file path] [--context-lines N] [--regex] [--json]",
+        );
+        return 1;
+      }
+      const contextLines = Number(flags["context-lines"] ?? 20);
+      const asJson = Boolean(flags.json);
+      if (flags.file) {
+        const file = String(flags.file);
+        const text = await readFile(file, "utf8");
+        const r = await retrieveInText(text, query, {
+          path: file,
+          contextLines,
+          regex: Boolean(flags.regex),
+        });
+        if (asJson) {
+          console.log(JSON.stringify(r, null, 2));
+        } else {
+          console.log(
+            `retrieve "${query}" in ${file}: ${r.hits.length} hit(s), ${r.spans.length} span(s)\n`,
+          );
+          console.log(r.context || "(no hits)");
+        }
+        return 0;
+      }
+      const root = String(flags.root ?? project);
+      const r = await retrieve({
+        root,
+        query,
+        contextLines,
+        regex: Boolean(flags.regex),
+      });
+      if (asJson) {
+        console.log(JSON.stringify(r, null, 2));
+      } else {
+        console.log(
+          `retrieve "${query}" under ${root}: scanned ${r.filesScanned} files, ${r.hits.length} hit(s)`,
+        );
+        console.log(
+          `tokens: dump ${r.stats.fullDumpTokens} → retrieved ${r.stats.retrievedTokens} (saved ${r.stats.savedPct.toFixed(1)}%)\n`,
+        );
+        console.log(r.context || "(no hits)");
+      }
+      return 0;
+    }
+
     case "classify": {
       let text = "";
       const target = positional[0] ?? "-";
@@ -158,6 +228,145 @@ export async function run(argv = process.argv): Promise<number> {
         ),
       );
       return 0;
+    }
+
+    case "compare": {
+      const mode = positional[0] ?? "demo";
+      const model = String(flags.model ?? "claude-sonnet-4");
+      const asJson = Boolean(flags.json);
+
+      const printOne = (r: ReturnType<typeof compareCompress>) => {
+        if (asJson) console.log(JSON.stringify(r, null, 2));
+        else console.log(formatCompareResult(r));
+      };
+      const printMany = (rows: Awaited<ReturnType<typeof compareDemo>>) => {
+        if (asJson) console.log(JSON.stringify(rows, null, 2));
+        else console.log(formatCompareResults(rows));
+      };
+
+      try {
+        if (mode === "demo") {
+          printMany(
+            await compareDemo({
+              model,
+              turns: Number(flags.turns ?? 100),
+            }),
+          );
+          return 0;
+        }
+
+        if (mode === "compress") {
+          const file = String(flags.file ?? "");
+          if (!file) {
+            console.error(
+              "Usage: optima compare compress --file <path> [--kind test|json|git|auto] [--model id]",
+            );
+            return 1;
+          }
+          const text = await readFile(file, "utf8");
+          printOne(
+            compareCompress(text, {
+              kind: String(flags.kind ?? "auto"),
+              model,
+            }),
+          );
+          return 0;
+        }
+
+        if (mode === "cache") {
+          const file = String(flags.file ?? "");
+          if (!file) {
+            console.error(
+              "Usage: optima compare cache --file <system.txt> [--turns N] [--model id]",
+            );
+            return 1;
+          }
+          const text = await readFile(file, "utf8");
+          printOne(
+            compareCache(text, {
+              turns: Number(flags.turns ?? 100),
+              model,
+            }),
+          );
+          return 0;
+        }
+
+        if (mode === "context") {
+          const file = String(flags.file ?? "");
+          if (!file) {
+            console.error(
+              "Usage: optima compare context --file <path> [--lines N] [--model id]",
+            );
+            return 1;
+          }
+          const text = await readFile(file, "utf8");
+          printOne(
+            compareContext(text, {
+              lines: Number(flags.lines ?? 120),
+              model,
+            }),
+          );
+          return 0;
+        }
+
+        if (mode === "retrieve") {
+          const query = String(flags.query ?? "");
+          if (!query) {
+            console.error(
+              "Usage: optima compare retrieve --query <text> [--file path | --root dir] [--context-lines N] [--regex] [--model id]",
+            );
+            return 1;
+          }
+          const file = flags.file ? String(flags.file) : "";
+          const root = flags.root ? String(flags.root) : "";
+          if (file) {
+            const text = await readFile(file, "utf8");
+            printOne(
+              await compareRetrieve({
+                query,
+                fileText: text,
+                filePath: file,
+                contextLines: Number(flags["context-lines"] ?? 20),
+                regex: Boolean(flags.regex),
+                model,
+              }),
+            );
+          } else {
+            printOne(
+              await compareRetrieve({
+                query,
+                root: root || project,
+                contextLines: Number(flags["context-lines"] ?? 20),
+                regex: Boolean(flags.regex),
+                model,
+              }),
+            );
+          }
+          return 0;
+        }
+
+        if (mode === "session") {
+          const file = String(flags.file ?? positional[1] ?? "");
+          if (!file) {
+            console.error(
+              "Usage: optima compare session --file <transcript.jsonl> [--model id]",
+            );
+            return 1;
+          }
+          const text = await readFile(file, "utf8");
+          printOne(compareSession(text, file, { model }));
+          return 0;
+        }
+
+        console.error(`Unknown compare mode: ${mode}`);
+        console.error(
+          "Modes: compress | cache | context | retrieve | session | demo",
+        );
+        return 1;
+      } catch (err) {
+        console.error(err instanceof Error ? err.message : err);
+        return 1;
+      }
     }
 
     case "bench": {

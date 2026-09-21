@@ -23,8 +23,21 @@ export const TAXONOMY: OptimizationTechnique[] = [
     summary:
       "Prefer symbol/section/skeleton reads and grep-before-read over full-file or repo dumps.",
     whenToUse: ["Code exploration", "Large files", "Repeated symbol lookups"],
-    antiPatterns: ["Reading entire files for a single identifier"],
-    relatedIds: ["sess.tool_batching"],
+    antiPatterns: ["Reading entire files for a single identifier", "Blind truncation of source"],
+    relatedIds: ["sess.tool_batching", "ctx.local_index_retrieve"],
+  },
+  {
+    id: "ctx.local_index_retrieve",
+    name: "Local index retrieve",
+    layer: "input_context",
+    effort: "medium",
+    risk: "low",
+    evidence: "measured",
+    summary:
+      "Search the tree (substring/regex), rank hits, read ±N line spans — keep understanding without dumping the repo.",
+    whenToUse: ["Finding symbols", "Large monorepos", "Prefer over compress for source code"],
+    antiPatterns: ["Embedding phone-home indexes without review", "Using compress on sacred source"],
+    relatedIds: ["ctx.surgical_retrieval", "ctx.ignore_boundaries"],
   },
   {
     id: "ctx.progressive_disclosure",

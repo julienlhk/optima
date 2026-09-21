@@ -26,7 +26,8 @@
     "@optima/cache": "workspace:*",
     "@optima/classify": "workspace:*",
     "@optima/compress": "workspace:*",
-    "@optima/core": "workspace:*"
+    "@optima/core": "workspace:*",
+    "@optima/retrieve": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

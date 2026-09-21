@@ -75,6 +75,9 @@ importers:
       '@optima/core':
         specifier: workspace:*
         version: link:../core
+      '@optima/retrieve':
+        specifier: workspace:*
+        version: link:../retrieve
 
   packages/compress:
     dependencies:
@@ -83,6 +86,12 @@ importers:
         version: link:../core
 
   packages/core: {}
+
+  packages/retrieve:
+    dependencies:
+      '@optima/core':
+        specifier: workspace:*
+        version: link:../core
 
 packages:
 

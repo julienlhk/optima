@@ -22,6 +22,8 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: node packages/cli/dist/bin.js bench
+      - run: node packages/cli/dist/bin.js compare demo
+      - run: node packages/cli/dist/bin.js retrieve --query TokenMeter --root packages/core
       - run: node bin/optima.js help
       - run: node packages/cli/dist/bin.js taxonomy | node -e "let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>{const j=JSON.parse(s); if(!j.techniques||j.techniques.length<10) process.exit(1);})"
       - name: Validate init in temp dir

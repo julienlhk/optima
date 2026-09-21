@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+- `optima compare` — without/with Optima token+$ comparisons (`compress`, `cache`, `context`, `retrieve`, `session`, `demo`)
+- `@optima/retrieve` + `optima retrieve` — local search → span reads (index better, keep understanding)
+- Prefer retrieve over blind truncation for source; compress stays for tool-log noise
+
 ## 1.0.2
 
 - `optima debug` — structured hypothesize → rank → log → fix protocol + local probe

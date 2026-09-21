@@ -14,6 +14,9 @@ npx optima debug [--problem "..."] [--write]
 npx optima analyze
 npx optima classify README.md
 npx optima estimate --file README.md --model claude-sonnet-4
+npx optima compare demo
+npx optima compare retrieve --query TokenMeter --file packages/core/src/budget.ts
+npx optima retrieve --query TokenMeter --root packages/core
 npx optima bench
 npx optima taxonomy
 npx optima help

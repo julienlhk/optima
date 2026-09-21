@@ -10,9 +10,10 @@
 ## Brownfield
 
 1. Start with **ignore boundaries** + Cursor rule only (`--host cursor`)
-2. Run `optima analyze --apply-rules` on existing Cursor transcripts
-3. Introduce diet `on` before `ultra`
-4. Wire `TokenMeter` around production LLM calls last
+2. Prefer **search → span read** (`optima retrieve`) over dumping files; use compress for tool logs only
+3. Run `optima analyze --apply-rules` on existing Cursor transcripts
+4. Introduce diet `on` before `ultra`
+5. Wire `TokenMeter` around production LLM calls last
 
 ## Host matrix
 

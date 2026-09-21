@@ -13,5 +13,6 @@ export default defineConfig({
     "@optima/compress",
     "@optima/cache",
     "@optima/analyze",
+    "@optima/retrieve",
   ],
 });
